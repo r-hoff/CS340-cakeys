@@ -1,0 +1,101 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol';
+  background-color: #eeeeee;
+  margin: none;
+  padding: 0em;
+}
+
+.Page {
+  text-align: center;
+}
+
+/* table related items*/
+table,
+caption,
+tr,
+th,
+td {
+  border-collapse: collapse;
+  padding: 0.25rem 0.25rem;
+}
+
+th {
+  background-color: #0288d1;
+  color: white;
+}
+
+td {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+table {
+  width: 75%;
+  background-color: #fafafa;
+  margin: auto;
+}
+
+caption {
+  font-size: large;
+  font-weight: bold;
+}
+
+
+label,
+input {
+  padding: 0.25rem;
+  margin: 0.25rem;
+}
+
+form {
+  width: 50%;
+  margin: auto;
+}
+
+.rows {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.labels,
+.inputs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.container {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.navigation {
+  width: 50%;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.centered {
+  text-align: center;
+}
+
+.tab, .tab:visited {
+  color: inherit;
+  font-size: large;
+  padding: .5rem;
+  margin: .25rem;
+  text-decoration: none;
+}
+
+.tab:hover {
+  background-color: #E0E0E0;
+  text-decoration: underline;
+}
