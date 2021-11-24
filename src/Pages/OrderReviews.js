@@ -75,50 +75,35 @@ export default function OrderReviews() {
         <form onSubmit={onSubmit}>
           <div className='rows'>
             <div className='labels'>
-              <label htmlFor='overall_rating'>Overall Rating (1-10): </label>
-              <label htmlFor='product_quality_rating'>Product Quality Rating (1-10): </label>
-              <label htmlFor='service_rating'>Service Rating (1-10): </label>
+              <label htmlFor='overall_rating'>Overall Rating (1-5): </label>
+              <label htmlFor='product_quality_rating'>Product Quality Rating (1-5): </label>
+              <label htmlFor='service_rating'>Service Rating (1-5): </label>
               <label htmlFor='comment'>Comment: </label>
             </div>
             <div className='inputs'>
               <select type='number' id='overall_rating' name='overall_rating' onChange={onChange} required>
                 <option value=''></option>
-                <option value='1'>1</option>
-                <option value='2'>2</option>
-                <option value='3'>3</option>
-                <option value='4'>4</option>
-                <option value='5'>5</option>
-                <option value='6'>6</option>
-                <option value='7'>7</option>
-                <option value='8'>8</option>
-                <option value='9'>9</option>
-                <option value='10'>10</option>
+                <option value='5'>5 - Very Satisfied</option>
+                <option value='4'>4 - Satisfied</option>
+                <option value='3'>3 - Neutral</option>
+                <option value='2'>2 - Dissatisfied</option>
+                <option value='1'>1 - Very Dissatisfied</option>
               </select>
               <select type='number' id='product_quality_rating' name='product_quality_rating' onChange={onChange} required>
                 <option value=''></option>
-                <option value='1'>1</option>
-                <option value='2'>2</option>
-                <option value='3'>3</option>
-                <option value='4'>4</option>
-                <option value='5'>5</option>
-                <option value='6'>6</option>
-                <option value='7'>7</option>
-                <option value='8'>8</option>
-                <option value='9'>9</option>
-                <option value='10'>10</option>
+                <option value='5'>5 - Very Satisfied</option>
+                <option value='4'>4 - Satisfied</option>
+                <option value='3'>3 - Neutral</option>
+                <option value='2'>2 - Dissatisfied</option>
+                <option value='1'>1 - Very Dissatisfied</option>
               </select>
               <select type='number' id='service_rating' name='service_rating' onChange={onChange} required>
                 <option value=''></option>
-                <option value='1'>1</option>
-                <option value='2'>2</option>
-                <option value='3'>3</option>
-                <option value='4'>4</option>
-                <option value='5'>5</option>
-                <option value='6'>6</option>
-                <option value='7'>7</option>
-                <option value='8'>8</option>
-                <option value='9'>9</option>
-                <option value='10'>10</option>
+                <option value='5'>5 - Very Satisfied</option>
+                <option value='4'>4 - Satisfied</option>
+                <option value='3'>3 - Neutral</option>
+                <option value='2'>2 - Dissatisfied</option>
+                <option value='1'>1 - Very Dissatisfied</option>
               </select>
               <textarea id='comment' name='comment' onChange={onChange} />
             </div>

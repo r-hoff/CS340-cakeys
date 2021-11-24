@@ -59,7 +59,7 @@ export default function Cakes() {
   const onDelete = (index) => {
     const id = cakes[index].cake_ID;
     const deleteUrl = url + '/' + id;
-    const confirmDelete = window.confirm('Are you sure you want to delete this record?');
+    const confirmDelete = window.confirm('Warning: Deleting this record will delete all related OrderedCakes. Are you sure you wish to continue?');
     if (confirmDelete === true) {
       axios.delete(deleteUrl).then((res) => {
         setCakes(cakes.filter((cake) => cake.cake_ID !== id));
@@ -125,7 +125,7 @@ export default function Cakes() {
                   <input type='number' step='0.01' min='0' id='cake_retail_price_USD' name='cake_retail_price_USD' onChange={onChangeUpdate} value={updateCake.cake_retail_price_USD}></input>
                 </div>
               </div>
-              <input type='submit' value='Submit'></input>
+              <input type='submit' value='Update'></input>
             </form>
           </div>
         )}
