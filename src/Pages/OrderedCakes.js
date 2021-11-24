@@ -55,7 +55,7 @@ export default function OrderedCakes() {
                   <tr key={index}>
                     <td>{order.order_ID}</td>
                     <td>{order.cake_ID}</td>
-                    <td>{order.cake_sale_price_USD}</td>
+                    <td>{Number(order.cake_sale_price_USD).toFixed(2)}</td>
                     <td>{order.cake_qty}</td>
                     <td>{order.order_status}</td>
                     <td>
@@ -75,18 +75,23 @@ export default function OrderedCakes() {
         <form onSubmit={onSubmit}>
           <div className='rows'>
             <div className='labels'>
-              <label for='order_ID'>Order ID: </label>
-              <label for='cake_ID'>Cake ID: </label>
-              <label for='cake_sale_price_USD'>Cake Sale Price (USD): </label>
-              <label for='cake_qty'>Quantity: </label>
-              <label for='order_status'>Order Status: </label>
+              <label htmlFor='order_ID'>Order ID: </label>
+              <label htmlFor='cake_ID'>Cake ID: </label>
+              <label htmlFor='cake_sale_price_USD'>Cake Sale Price (USD): </label>
+              <label htmlFor='cake_qty'>Quantity: </label>
+              <label htmlFor='order_status'>Order Status: </label>
             </div>
             <div className='inputs'>
-              <input type='text' id='order_ID' name='order_ID' onChange={onChange} required></input>
-              <input type='text' id='cake_ID' name='cake_ID' onChange={onChange} required></input>
-              <input type='text' id='cake_sale_price_USD' name='cake_sale_price_USD' onChange={onChange}></input>
-              <input type='text' id='cake_qty' name='cake_qty' onChange={onChange} required></input>
-              <input type='text' id='order_status' name='order_status' onChange={onChange} required></input>
+              <input type='number' id='order_ID' name='order_ID' onChange={onChange} required></input>
+              <input type='number' id='cake_ID' name='cake_ID' onChange={onChange} required></input>
+              <input type='number' placeholder='0.00' step='0.01' min='0' id='cake_sale_price_USD' name='cake_sale_price_USD' onChange={onChange}></input>
+              <input type='number' id='cake_qty' name='cake_qty' onChange={onChange} required></input>
+              <select id='order_status' name='order_status' onChange={onChange} required>
+                <option value=''></option>
+                <option value='Incomplete'>Incomplete</option>
+                <option value='Awaiting Pickup'>Awaiting Pickup</option>
+                <option value='Completed'>Completed</option>
+              </select>
             </div>
           </div>
           <input type='submit' value='Submit'></input>

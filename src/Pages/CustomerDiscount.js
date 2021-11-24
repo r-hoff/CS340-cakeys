@@ -50,7 +50,7 @@ export default function CustomerDiscount() {
                   <tr key={index}>
                     <td>{discount.discount_ID}</td>
                     <td>{discount.discount_name}</td>
-                    <td>{discount.discount_rate}</td>
+                    <td>{discount.discount_rate * 100 + '%'}</td>
                     <td>
                       <RiDeleteBinLine color='red' />
                     </td>
@@ -68,12 +68,12 @@ export default function CustomerDiscount() {
         <form onSubmit={onSubmit}>
           <div className='rows'>
             <div className='labels'>
-              <label for='discount_name'>Discount Name: </label>
-              <label for='discount_rate'>Discount Rate: </label>
+              <label htmlFor='discount_name'>Discount Name: </label>
+              <label htmlFor='discount_rate'>Discount Rate (each 1% = 0.01): </label>
             </div>
             <div className='inputs'>
               <input type='text' id='discount_name' name='discount_name' onChange={onChange} required></input>
-              <input type='text' id='discount_rate' name='discount_rate' onChange={onChange} required></input>
+              <input type='number' placeholder='0.00' step='0.01' min='0' max='1' id='discount_rate' name='discount_rate' onChange={onChange} required></input>
             </div>
           </div>
           <input type='submit' value='Submit'></input>
