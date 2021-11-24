@@ -4,6 +4,9 @@ import axios from 'axios';
 
 export default function Customers() {
   const url = 'http://flip1.engr.oregonstate.edu:9001/api/customers';
+
+  const [showUpdate, setShowUpdate] = useState(false);
+  const [updateCustomer, setUpdateCustomer] = useState(null);
   const [customers, setCustomers] = useState(null);
   const [newCustomer, setNewCustomer] = useState({
     discount_ID: null,
@@ -28,12 +31,30 @@ export default function Customers() {
     setNewCustomer({ ...newCustomer, [event.target.name]: event.target.value });
   };
 
+  const onChangeUpdate = (event) => {
+    setUpdateCustomer({ ...updateCustomer, [event.target.name]: event.target.value });
+  };
+
   const onSubmit = (event) => {
     event.preventDefault();
     axios.post(url, newCustomer).then((res) => {
       setCustomers([...customers, res.data]);
     });
   };
+
+  const onSubmitUpdate = (event) => {
+    event.preventDefault();
+    const id = updateCustomer.customer_ID;
+    const updateUrl = url + '/' + id;
+    axios.put(updateUrl, updateCustomer)
+         .then(res => {
+              const updateArr = customers.slice();
+              updateArr[customers.findIndex((customer) => {
+                return customer.customer_ID === id;
+              })] = res.data;
+              setCustomers(updateArr); 
+            });
+  }
 
   const onSearch = (event) => {
     event.preventDefault();
@@ -42,6 +63,20 @@ export default function Customers() {
       setCustomers(res.data);
     });
   };
+
+  const onClick = (index) => {
+    setUpdateCustomer(customers[index]);
+    setShowUpdate(true);
+  };
+
+  const onDelete = (index) => {
+    const id = customers[index].customer_ID
+    const deleteUrl = url + '/' + id;
+    axios.delete(deleteUrl)
+         .then(res => {
+            setCustomers(customers.filter(customer => customer.customer_ID !== id)); 
+          })
+  }
 
   return (
     <div className='Page'>
@@ -89,16 +124,107 @@ export default function Customers() {
                     <td>{customer.customer_phone}</td>
                     <td>{customer.customer_email}</td>
                     <td>
-                      <RiDeleteBinLine color='red' />
+                      <RiDeleteBinLine color='red' onClick={() => onDelete(index)}/>
                     </td>
                     <td>
-                      <RiEditLine />
+                      <RiEditLine onClick={() => onClick(index)}/>
                     </td>
                   </tr>
                 );
               })}
           </tbody>
         </table>
+      </div>
+      <div>
+        {showUpdate &&
+          <div>
+            <h3>Update Record</h3>
+            <form onSubmit={onSubmitUpdate}>
+              <div className='rows'>
+                <div className='labels'>
+                  <label htmlFor='customer_ID'>Customer ID: </label>
+                  <label htmlFor='discount_ID'>Discount ID (optional): </label>
+                  <label htmlFor='customer_first_name'>First Name: </label>
+                  <label htmlFor='customer_last_name'>Last Name: </label>
+                  <label htmlFor='customer_DOB'>Date of Birth (optional): </label>
+                  <label htmlFor='customer_street_address'>Street Address: </label>
+                  <label htmlFor='customer_city'>City: </label>
+                  <label htmlFor='customer_state'>State: </label>
+                  <label htmlFor='customer_zip'>Zip Code: </label>
+                  <label htmlFor='customer_phone'>Phone (Ex: 555-555-5555): </label>
+                  <label htmlFor='customer_email'>Email: </label>
+                </div>
+                <div className='inputs'>
+                  <input type='text' id='customer_ID' name='customer_ID' value={updateCustomer.customer_ID} readOnly></input>
+                  <input type='number' min='1' id='discount_ID' name='discount_ID' onChange={onChangeUpdate} value={updateCustomer.discount_ID}></input>
+                  <input type='text' id='customer_first_name' name='customer_first_name' onChange={onChangeUpdate} value={updateCustomer.customer_first_name} required></input>
+                  <input type='text' id='customer_last_name' name='customer_last_name' onChange={onChangeUpdate} value={updateCustomer.customer_last_name} required></input>
+                  <input type='date' id='customer_DOB' name='customer_DOB' onChange={onChangeUpdate} value={updateCustomer.customer_DOB}></input>
+                  <input type='text' id='customer_street_address' name='customer_street_address' onChange={onChangeUpdate} value={updateCustomer.customer_street_address} required></input>
+                  <input type='text' id='customer_city' name='customer_city' onChange={onChangeUpdate} value={updateCustomer.customer_city} required></input>
+                  <select id='customer_state' name='customer_state' onChange={onChangeUpdate} value={updateCustomer.customer_state} required>
+                    <option value=''></option>
+                    <option value='AL'>AL</option>
+                    <option value='AK'>AK</option>
+                    <option value='AR'>AR</option>
+                    <option value='AZ'>AZ</option>
+                    <option value='CA'>CA</option>
+                    <option value='CO'>CO</option>
+                    <option value='CT'>CT</option>
+                    <option value='DC'>DC</option>
+                    <option value='DE'>DE</option>
+                    <option value='FL'>FL</option>
+                    <option value='GA'>GA</option>
+                    <option value='HI'>HI</option>
+                    <option value='IA'>IA</option>
+                    <option value='ID'>ID</option>
+                    <option value='IL'>IL</option>
+                    <option value='IN'>IN</option>
+                    <option value='KS'>KS</option>
+                    <option value='KY'>KY</option>
+                    <option value='LA'>LA</option>
+                    <option value='MA'>MA</option>
+                    <option value='MD'>MD</option>
+                    <option value='ME'>ME</option>
+                    <option value='MI'>MI</option>
+                    <option value='MN'>MN</option>
+                    <option value='MO'>MO</option>
+                    <option value='MS'>MS</option>
+                    <option value='MT'>MT</option>
+                    <option value='NC'>NC</option>
+                    <option value='NE'>NE</option>
+                    <option value='NH'>NH</option>
+                    <option value='NJ'>NJ</option>
+                    <option value='NM'>NM</option>
+                    <option value='NV'>NV</option>
+                    <option value='NY'>NY</option>
+                    <option value='ND'>ND</option>
+                    <option value='OH'>OH</option>
+                    <option value='OK'>OK</option>
+                    <option value='OR'>OR</option>
+                    <option value='PA'>PA</option>
+                    <option value='RI'>RI</option>
+                    <option value='SC'>SC</option>
+                    <option value='SD'>SD</option>
+                    <option value='TN'>TN</option>
+                    <option value='TX'>TX</option>
+                    <option value='UT'>UT</option>
+                    <option value='VT'>VT</option>
+                    <option value='VA'>VA</option>
+                    <option value='WA'>WA</option>
+                    <option value='WI'>WI</option>
+                    <option value='WV'>WV</option>
+                    <option value='WY'>WY</option>
+                  </select>
+                  <input type='text' pattern='[0-9]*' minLength='5' maxLength='5' id='customer_zip' name='customer_zip' onChange={onChangeUpdate} value={updateCustomer.customer_zip} required></input>
+                  <input type='tel' pattern='[0-9]{3}-[0-9]{3}-[0-9]{4}' id='customer_phone' name='customer_phone' onChange={onChangeUpdate} value={updateCustomer.customer_phone} required></input>
+                  <input type='email' id='customer_email' name='customer_email' onChange={onChangeUpdate} value={updateCustomer.customer_email} required></input>
+                </div>
+              </div>
+              <input type='submit' value='Submit'></input>
+            </form>
+          </div>
+        }
       </div>
       <div className='container'>
         <h3>Add New Record</h3>

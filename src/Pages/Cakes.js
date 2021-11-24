@@ -4,6 +4,7 @@ import axios from 'axios';
 
 export default function Cakes() {
   const url = 'http://flip1.engr.oregonstate.edu:9001/api/cakes';
+
   const [showUpdate, setShowUpdate] = useState(false);
   const [updateCake, setUpdateCake] = useState(null);
   const [cakes, setCakes] = useState(null);
@@ -46,7 +47,6 @@ export default function Cakes() {
               })] = res.data;
               setCakes(updateArr); 
             });
-    
   }
 
   const onClick = (index) => {
@@ -108,10 +108,10 @@ export default function Cakes() {
             <form onSubmit={onSubmitUpdate}>
               <div className='rows'>
                 <div className='labels'>
-                  <label for='cake_cake_id'>Cake Id: </label>
-                  <label for='cake_name'>Cake Name: </label>
-                  <label for='cake_size'>Cake Size (inches): </label>
-                  <label for='cake_retail_price_USD'>Cake Retail Price (USD): </label>
+                  <label htmlFor='cake_cake_id'>Cake Id: </label>
+                  <label htmlFor='cake_name'>Cake Name: </label>
+                  <label htmlFor='cake_size'>Cake Size (inches): </label>
+                  <label htmlFor='cake_retail_price_USD'>Cake Retail Price (USD): </label>
                 </div>
                 <div className='inputs'>
                   <input readOnly type='text' id='cake_cake_id' name='cake_cake_id' value={updateCake.cake_ID}></input>
@@ -130,9 +130,9 @@ export default function Cakes() {
         <form onSubmit={onSubmit}>
           <div className='rows'>
             <div className='labels'>
-              <label for='cake_name'>Cake Name: </label>
-              <label for='cake_size'>Cake Size (inches): </label>
-              <label for='cake_retail_price_USD'>Cake Retail Price (USD): </label>
+              <label htmlFor='cake_name'>Cake Name: </label>
+              <label htmlFor='cake_size'>Cake Size (inches): </label>
+              <label htmlFor='cake_retail_price_USD'>Cake Retail Price (USD): </label>
             </div>
             <div className='inputs'>
               <input type='text' id='cake_name' name='cake_name' onChange={onChange} required></input>
