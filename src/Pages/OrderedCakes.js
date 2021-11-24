@@ -27,6 +27,7 @@ export default function OrderedCakes() {
     event.preventDefault();
     axios.post(url, newOrder).then((res) => {
       setOrders([...orders, res.data]);
+      event.target.reset();
     });
   };
 
@@ -84,8 +85,8 @@ export default function OrderedCakes() {
             <div className='inputs'>
               <input type='number' id='order_ID' name='order_ID' onChange={onChange} required></input>
               <input type='number' id='cake_ID' name='cake_ID' onChange={onChange} required></input>
-              <input type='number' placeholder='0.00' step='0.01' min='0' id='cake_sale_price_USD' name='cake_sale_price_USD' onChange={onChange}></input>
-              <input type='number' id='cake_qty' name='cake_qty' onChange={onChange} required></input>
+              <input type='number' placeholder='0.00' step='0.01' min='0' id='cake_sale_price_USD' name='cake_sale_price_USD' onChange={onChange} required></input>
+              <input type='number' min='1' id='cake_qty' name='cake_qty' onChange={onChange} required></input>
               <select id='order_status' name='order_status' onChange={onChange} required>
                 <option value=''></option>
                 <option value='Incomplete'>Incomplete</option>

@@ -24,6 +24,7 @@ export default function CustomerDiscount() {
     event.preventDefault();
     axios.post(url, newDiscount).then((res) => {
       setDiscounts([...discounts, res.data]);
+      event.target.reset();
     });
   };
 

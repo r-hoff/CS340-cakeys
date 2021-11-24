@@ -46,8 +46,13 @@ caption {
 
 label,
 input,
-select,
+select {
+  padding: 0.25rem;
+  margin: 0.25rem;
+}
+
 textarea {
+  height: 1.7rem;
   padding: 0.25rem;
   margin: 0.25rem;
 }
@@ -65,9 +70,10 @@ form {
 
 .labels,
 .inputs {
+  text-align: right;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .container {

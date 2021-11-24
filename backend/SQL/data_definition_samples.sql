@@ -23,7 +23,7 @@ CREATE TABLE `Customers` (
     `customer_phone` varchar(255) NOT NULL,
     `customer_email` varchar(255) NOT NULL,
     `discount_ID` int(11),
-    FOREIGN KEY (`discount_ID`) REFERENCES `CustomerDiscount` (`discount_ID`)
+    FOREIGN KEY (`discount_ID`) REFERENCES `CustomerDiscount` (`discount_ID`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `OrderReviews` (
@@ -44,8 +44,8 @@ CREATE TABLE `Orders` (
     `order_pickup_date` date NOT NULL,
     `customer_ID` int(11) NOT NULL,
     `review_ID` int(11),
-    FOREIGN KEY (`customer_ID`) REFERENCES `Customers` (`customer_ID`),
-    FOREIGN KEY (`review_ID`) REFERENCES `OrderReviews` (`review_ID`)
+    FOREIGN KEY (`customer_ID`) REFERENCES `Customers` (`customer_ID`) ON DELETE CASCADE,
+    FOREIGN KEY (`review_ID`) REFERENCES `OrderReviews` (`review_ID`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `Cakes` (
@@ -62,8 +62,8 @@ CREATE TABLE `OrderedCakes` (
     `cake_qty` int(11) NOT NULL,
     `order_status` varchar(255) NOT NULL,
     PRIMARY KEY (`order_ID`, `cake_ID`),
-    FOREIGN KEY (`order_ID`) REFERENCES `Orders` (`order_ID`),
-    FOREIGN KEY (`cake_ID`) REFERENCES `Cakes` (`cake_ID`)
+    FOREIGN KEY (`order_ID`) REFERENCES `Orders` (`order_ID`) ON DELETE CASCADE,
+    FOREIGN KEY (`cake_ID`) REFERENCES `Cakes` (`cake_ID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `CustomerDiscount`(`discount_name`, `discount_rate`) VALUES
@@ -89,8 +89,8 @@ INSERT INTO `OrderReviews` (`overall_rating`, `product_quality_rating`, `service
 (5, 5, 5, 'The cake tasted delicious!');
 
 INSERT INTO `Orders` (`order_total_USD`, `order_date_time`, `credit_card_number`, `credit_card_expiration`, `order_fill_date`, `order_pickup_date`, `customer_ID`, `review_ID`) VALUES
-(88.21, '2021-10-23 14:30:27','1234567812345678','2024-11-01','2021-10-27','2021-10-28', 2, NULL),
-(104.98, '2021-09-21 22:00:11','4321876543218765','2023-05-02','2021-10-10','2021-10-12', 1, 1);
+(88.21, '2021-10-23 14:30:27','1234567812345678','2024-11','2021-10-27','2021-10-28', 2, NULL),
+(104.98, '2021-09-21 22:00:11','4321876543218765','2023-05','2021-10-10','2021-10-12', 1, 1);
 
 INSERT INTO `OrderedCakes` (`order_ID`, `cake_ID`, `cake_sale_price_USD`, `cake_qty`, `order_status`) VALUES
 (1, 1, 45.99, 1, 'Incomplete'),

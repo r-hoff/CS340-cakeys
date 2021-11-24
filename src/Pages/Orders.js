@@ -30,6 +30,7 @@ export default function Orders() {
     event.preventDefault();
     axios.post(url, newOrder).then((res) => {
       setOrders([...orders, res.data]);
+      event.target.reset();
     });
   };
 
@@ -96,7 +97,7 @@ export default function Orders() {
               <label htmlFor='review_ID'>Review ID: </label>
             </div>
             <div className='inputs'>
-              <input type='text' id='customer_ID' name='customer_ID' onChange={onChange}></input>
+              <input type='number' id='customer_ID' name='customer_ID' onChange={onChange}></input>
               <input type='number' placeholder='0.00' step='0.01' min='0' id='order_total_USD' name='order_total_USD' onChange={onChange} required></input>
               <input type='datetime-local' id='order_date_time' name='order_date_time' onChange={onChange}></input>
               <input type='text' pattern='[0-9]*' minLength='16' maxLength='16' id='credit_card_number' name='credit_card_number' onChange={onChange} required></input>

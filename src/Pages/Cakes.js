@@ -11,7 +11,7 @@ export default function Cakes() {
   const [newCake, setNewCake] = useState({
     cake_name: '',
     cake_retail_price_USD: 0.0,
-    cake_size: 0.0,
+    cake_size: '',
   });
 
   useEffect(() => {
@@ -32,6 +32,7 @@ export default function Cakes() {
     event.preventDefault();
     axios.post(url, newCake).then((res) => {
       setCakes([...cakes, res.data]);
+      event.target.reset();
     });
   };
 
@@ -39,15 +40,17 @@ export default function Cakes() {
     event.preventDefault();
     const id = updateCake.cake_ID;
     const updateUrl = url + '/' + id;
-    axios.put(updateUrl, updateCake)
-         .then(res => {
-              const updateArr = cakes.slice();
-              updateArr[cakes.findIndex((cake) => {
-                return cake.cake_ID === id;
-              })] = res.data;
-              setCakes(updateArr); 
-            });
-  }
+    axios.put(updateUrl, updateCake).then((res) => {
+      const updateArr = cakes.slice();
+      updateArr[
+        cakes.findIndex((cake) => {
+          return cake.cake_ID === id;
+        })
+      ] = res.data;
+      setCakes(updateArr);
+      setShowUpdate(false);
+    });
+  };
 
   const onClick = (index) => {
     setUpdateCake(cakes[index]);
@@ -55,13 +58,16 @@ export default function Cakes() {
   };
 
   const onDelete = (index) => {
-    const id = cakes[index].cake_ID
+    const id = cakes[index].cake_ID;
     const deleteUrl = url + '/' + id;
-    axios.delete(deleteUrl)
-         .then(res => {
-            setCakes(cakes.filter(cake => cake.cake_ID !== id)); 
-          })
-  }
+    const confirmDelete = window.confirm('Warning: Deleting this record will delete all related OrderedCakes. Are you sure you wish to continue?');
+    if (confirmDelete === true) {
+      axios.delete(deleteUrl).then((res) => {
+        setCakes(cakes.filter((cake) => cake.cake_ID !== id));
+      });
+    } else {
+    }
+  };
 
   return (
     <div className='Page'>
@@ -87,13 +93,13 @@ export default function Cakes() {
                   <tr key={index}>
                     <td>{cake.cake_ID}</td>
                     <td>{cake.cake_name}</td>
-                    <td>{cake.cake_retail_price_USD}</td>
                     <td>{cake.cake_size}</td>
+                    <td>{Number(cake.cake_retail_price_USD).toFixed(2)}</td>
                     <td>
-                      <RiDeleteBinLine color='red' onClick={() => onDelete(index)}/>
+                      <RiDeleteBinLine color='red' onClick={() => onDelete(index)} />
                     </td>
                     <td>
-                      <RiEditLine onClick={() => onClick(index)}/>
+                      <RiEditLine onClick={() => onClick(index)} />
                     </td>
                   </tr>
                 );
@@ -102,28 +108,28 @@ export default function Cakes() {
         </table>
       </div>
       <div>
-        {showUpdate &&
+        {showUpdate && (
           <div>
             <h3>Update Record</h3>
             <form onSubmit={onSubmitUpdate}>
               <div className='rows'>
                 <div className='labels'>
-                  <label htmlFor='cake_cake_id'>Cake Id: </label>
+                  <label htmlFor='cake_ID'>Cake ID: </label>
                   <label htmlFor='cake_name'>Cake Name: </label>
-                  <label htmlFor='cake_size'>Cake Size (inches): </label>
+                  <label htmlFor='cake_size'>Cake Size (6-24 inches): </label>
                   <label htmlFor='cake_retail_price_USD'>Cake Retail Price (USD): </label>
                 </div>
                 <div className='inputs'>
-                  <input readOnly type='text' id='cake_cake_id' name='cake_cake_id' value={updateCake.cake_ID}></input>
+                  <input readOnly type='number' id='cake_ID' name='cake_ID' value={updateCake.cake_ID}></input>
                   <input type='text' id='cake_name' name='cake_name' onChange={onChangeUpdate} value={updateCake.cake_name} required></input>
-                  <input type='text' id='cake_size' name='cake_size' onChange={onChangeUpdate} value={updateCake.cake_size}></input>
-                  <input type='text' id='cake_retail_price_USD' name='cake_retail_price_USD' onChange={onChangeUpdate} value={updateCake.cake_retail_price_USD}></input>
+                  <input type='number' min='6' max='24' id='cake_size' name='cake_size' onChange={onChangeUpdate} value={updateCake.cake_size} required></input>
+                  <input type='number' step='0.01' min='0' id='cake_retail_price_USD' name='cake_retail_price_USD' onChange={onChangeUpdate} value={updateCake.cake_retail_price_USD}></input>
                 </div>
               </div>
-              <input type='submit' value='Submit'></input>
+              <input type='submit' value='Update'></input>
             </form>
           </div>
-        }
+        )}
       </div>
       <div className='container'>
         <h3>Add New Record</h3>
@@ -131,13 +137,13 @@ export default function Cakes() {
           <div className='rows'>
             <div className='labels'>
               <label htmlFor='cake_name'>Cake Name: </label>
-              <label htmlFor='cake_size'>Cake Size (inches): </label>
+              <label htmlFor='cake_size'>Cake Size (6-24 inches): </label>
               <label htmlFor='cake_retail_price_USD'>Cake Retail Price (USD): </label>
             </div>
             <div className='inputs'>
               <input type='text' id='cake_name' name='cake_name' onChange={onChange} required></input>
-              <input type='text' id='cake_size' name='cake_size' onChange={onChange}></input>
-              <input type='text' id='cake_retail_price_USD' name='cake_retail_price_USD' onChange={onChange}></input>
+              <input type='number' min='6' max='24' id='cake_size' name='cake_size' onChange={onChange} required></input>
+              <input type='number' placeholder='0.00' step='0.01' min='0' id='cake_retail_price_USD' name='cake_retail_price_USD' onChange={onChange} required></input>
             </div>
           </div>
           <input type='submit' value='Submit'></input>
