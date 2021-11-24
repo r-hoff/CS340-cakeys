@@ -27,6 +27,7 @@ export default function OrderedCakes() {
     event.preventDefault();
     axios.post(url, newOrder).then((res) => {
       setOrders([...orders, res.data]);
+      event.target.reset();
     });
   };
 

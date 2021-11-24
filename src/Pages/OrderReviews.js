@@ -26,6 +26,7 @@ export default function OrderReviews() {
     event.preventDefault();
     axios.post(url, newReview).then((res) => {
       setReviews([...reviews, res.data]);
+      event.target.reset();
     });
   };
 

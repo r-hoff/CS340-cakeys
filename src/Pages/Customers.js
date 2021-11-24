@@ -32,6 +32,7 @@ export default function Customers() {
     event.preventDefault();
     axios.post(url, newCustomer).then((res) => {
       setCustomers([...customers, res.data]);
+      event.target.reset();
     });
   };
 

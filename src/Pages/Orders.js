@@ -30,6 +30,7 @@ export default function Orders() {
     event.preventDefault();
     axios.post(url, newOrder).then((res) => {
       setOrders([...orders, res.data]);
+      event.target.reset();
     });
   };
 
