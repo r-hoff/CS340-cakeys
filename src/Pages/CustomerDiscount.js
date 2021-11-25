@@ -4,6 +4,9 @@ import axios from 'axios';
 
 export default function CustomerDiscount() {
   const url = 'http://flip1.engr.oregonstate.edu:9001/api/customer-discount';
+  
+  const [showUpdate, setShowUpdate] = useState(false);
+  const [updateDiscount, setUpdateDiscount] = useState(null);
   const [discounts, setDiscounts] = useState(null);
   const [newDiscount, setNewDiscount] = useState({
     discount_name: '',
@@ -20,11 +23,44 @@ export default function CustomerDiscount() {
     setNewDiscount({ ...newDiscount, [event.target.name]: event.target.value });
   };
 
+  const onChangeUpdate = (event) => {
+    setUpdateDiscount({ ...updateDiscount, [event.target.name]: event.target.value });
+  };
+
   const onSubmit = (event) => {
     event.preventDefault();
     axios.post(url, newDiscount).then((res) => {
       setDiscounts([...discounts, res.data]);
       event.target.reset();
+    });
+  };
+
+  const onSubmitUpdate = (event) => {
+    event.preventDefault();
+    const id = updateDiscount.discount_ID;
+    const updateUrl = url + '/' + id;
+    axios.put(updateUrl, updateDiscount).then((res) => {
+      const updateArr = discounts.slice();
+      updateArr[
+        discounts.findIndex((discount) => {
+          return discount.discount_ID === id;
+        })
+      ] = res.data;
+      setDiscounts(updateArr);
+      setShowUpdate(false);
+    });
+  };  
+
+  const onClick = (index) => {
+    setUpdateDiscount(discounts[index]);
+    setShowUpdate(true);
+  };
+
+  const onDelete = (index) => {
+    const id = discounts[index].discount_ID;
+    const deleteUrl = url + '/' + id;
+    axios.delete(deleteUrl).then((res) => {
+      setDiscounts(discounts.filter((discount) => discount.discount_ID !== id));
     });
   };
 
@@ -53,16 +89,38 @@ export default function CustomerDiscount() {
                     <td>{discount.discount_name}</td>
                     <td>{discount.discount_rate * 100 + '%'}</td>
                     <td>
-                      <RiDeleteBinLine color='red' />
+                      <RiDeleteBinLine color='red' onClick={() => onDelete(index)} />
                     </td>
                     <td>
-                      <RiEditLine />
+                      <RiEditLine onClick={() => onClick(index)}/>
                     </td>
                   </tr>
                 );
               })}
           </tbody>
         </table>
+      </div>
+      <div>
+        {showUpdate && (
+          <div>
+            <h3>Update Record</h3>
+            <form onSubmit={onSubmitUpdate}>
+              <div className='rows'>
+                <div className='labels'>
+                  <label htmlFor='discount_ID'>Discount ID: </label>
+                  <label htmlFor='discount_name'>Discount Name: </label>
+                  <label htmlFor='discount_rate'>Discount Rate (each 1% = 0.01): </label>
+                </div>
+                <div className='inputs'>
+                  <input type='number' id='discount_ID' name='discount_ID' value={updateDiscount.discount_ID} readOnly></input>
+                  <input type='text' id='discount_name' name='discount_name' onChange={onChangeUpdate} value={updateDiscount.discount_name}  required></input>
+                  <input type='number' placeholder='0.00' step='0.01' min='0' max='1' id='discount_rate' name='discount_rate' onChange={onChangeUpdate} value={updateDiscount.discount_rate} required></input>
+                </div>
+              </div>
+              <input type='submit' value='Submit'></input>
+            </form>
+          </div>
+        )}
       </div>
       <div className='container'>
         <h3>Add New Record</h3>

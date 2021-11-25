@@ -65,7 +65,6 @@ export default function Cakes() {
       axios.delete(deleteUrl).then((res) => {
         setCakes(cakes.filter((cake) => cake.cake_ID !== id));
       });
-    } else {
     }
   };
 
