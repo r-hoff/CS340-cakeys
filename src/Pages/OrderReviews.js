@@ -59,10 +59,10 @@ export default function OrderReviews() {
                     <td>{review.service_rating}</td>
                     <td>{review.comment}</td>
                     <td>
-                      <RiDeleteBinLine color='red' />
+                      <RiDeleteBinLine className='iconClick' color='red' />
                     </td>
                     <td>
-                      <RiEditLine />
+                      <RiEditLine className='iconClick' />
                     </td>
                   </tr>
                 );

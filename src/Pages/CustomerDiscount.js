@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export default function CustomerDiscount() {
   const url = 'http://flip1.engr.oregonstate.edu:9001/api/customer-discount';
-  
+
   const [showUpdate, setShowUpdate] = useState(false);
   const [updateDiscount, setUpdateDiscount] = useState(null);
   const [discounts, setDiscounts] = useState(null);
@@ -49,7 +49,7 @@ export default function CustomerDiscount() {
       setDiscounts(updateArr);
       setShowUpdate(false);
     });
-  };  
+  };
 
   const onClick = (index) => {
     setUpdateDiscount(discounts[index]);
@@ -59,9 +59,12 @@ export default function CustomerDiscount() {
   const onDelete = (index) => {
     const id = discounts[index].discount_ID;
     const deleteUrl = url + '/' + id;
-    axios.delete(deleteUrl).then((res) => {
-      setDiscounts(discounts.filter((discount) => discount.discount_ID !== id));
-    });
+    const confirmDelete = window.confirm('Would you like to delete this record?');
+    if (confirmDelete === true) {
+      axios.delete(deleteUrl).then((res) => {
+        setDiscounts(discounts.filter((discount) => discount.discount_ID !== id));
+      });
+    }
   };
 
   return (
@@ -89,10 +92,10 @@ export default function CustomerDiscount() {
                     <td>{discount.discount_name}</td>
                     <td>{discount.discount_rate * 100 + '%'}</td>
                     <td>
-                      <RiDeleteBinLine color='red' onClick={() => onDelete(index)} />
+                      <RiDeleteBinLine className='iconClick' color='red' onClick={() => onDelete(index)} />
                     </td>
                     <td>
-                      <RiEditLine onClick={() => onClick(index)}/>
+                      <RiEditLine className='iconClick' onClick={() => onClick(index)} />
                     </td>
                   </tr>
                 );
@@ -113,7 +116,7 @@ export default function CustomerDiscount() {
                 </div>
                 <div className='inputs'>
                   <input type='number' id='discount_ID' name='discount_ID' value={updateDiscount.discount_ID} readOnly></input>
-                  <input type='text' id='discount_name' name='discount_name' onChange={onChangeUpdate} value={updateDiscount.discount_name}  required></input>
+                  <input type='text' id='discount_name' name='discount_name' onChange={onChangeUpdate} value={updateDiscount.discount_name} required></input>
                   <input type='number' placeholder='0.00' step='0.01' min='0' max='1' id='discount_rate' name='discount_rate' onChange={onChangeUpdate} value={updateDiscount.discount_rate} required></input>
                 </div>
               </div>

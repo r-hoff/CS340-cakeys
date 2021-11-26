@@ -53,7 +53,8 @@ export default function Customers() {
               updateArr[customers.findIndex((customer) => {
                 return customer.customer_ID === id;
               })] = res.data;
-              setCustomers(updateArr); 
+              setCustomers(updateArr);
+              setShowUpdate(false);
             });
   }
 
@@ -66,7 +67,9 @@ export default function Customers() {
   };
 
   const onClick = (index) => {
-    setUpdateCustomer(customers[index]);
+    const customer = customers[index]
+    customer.customer_DOB = customer.customer_DOB.slice(0, 10)
+    setUpdateCustomer(customer);
     setShowUpdate(true);
   };
 
@@ -125,10 +128,10 @@ export default function Customers() {
                     <td>{customer.customer_phone}</td>
                     <td>{customer.customer_email}</td>
                     <td>
-                      <RiDeleteBinLine color='red' onClick={() => onDelete(index)}/>
+                      <RiDeleteBinLine className='iconClick' color='red' onClick={() => onDelete(index)}/>
                     </td>
                     <td>
-                      <RiEditLine onClick={() => onClick(index)}/>
+                      <RiEditLine className='iconClick' onClick={() => onClick(index)}/>
                     </td>
                   </tr>
                 );

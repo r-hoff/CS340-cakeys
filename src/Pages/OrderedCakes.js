@@ -60,10 +60,10 @@ export default function OrderedCakes() {
                     <td>{order.cake_qty}</td>
                     <td>{order.order_status}</td>
                     <td>
-                      <RiDeleteBinLine color='red' />
+                      <RiDeleteBinLine className='iconClick' color='red' />
                     </td>
                     <td>
-                      <RiEditLine />
+                      <RiEditLine className='iconClick' />
                     </td>
                   </tr>
                 );

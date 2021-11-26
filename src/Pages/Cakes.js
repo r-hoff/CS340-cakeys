@@ -95,10 +95,10 @@ export default function Cakes() {
                     <td>{cake.cake_size}</td>
                     <td>{Number(cake.cake_retail_price_USD).toFixed(2)}</td>
                     <td>
-                      <RiDeleteBinLine color='red' onClick={() => onDelete(index)} />
+                      <RiDeleteBinLine className='iconClick' color='red' onClick={() => onDelete(index)} />
                     </td>
                     <td>
-                      <RiEditLine onClick={() => onClick(index)} />
+                      <RiEditLine className='iconClick' onClick={() => onClick(index)} />
                     </td>
                   </tr>
                 );

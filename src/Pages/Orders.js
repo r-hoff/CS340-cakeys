@@ -71,10 +71,10 @@ export default function Orders() {
                     <td>{order.order_pickup_date.slice(0, 10)}</td>
                     <td>{order.review_ID}</td>
                     <td>
-                      <RiDeleteBinLine color='red' />
+                      <RiDeleteBinLine className='iconClick' color='red' />
                     </td>
                     <td>
-                      <RiEditLine />
+                      <RiEditLine className='iconClick' />
                     </td>
                   </tr>
                 );

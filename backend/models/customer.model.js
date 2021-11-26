@@ -79,8 +79,8 @@ Customer.updateById = (id, customer, result) => {
         return;
       }
 
-      console.log('updated customer ', { customer_id: id, ...customer });
-      result(null, { customer_id: id, ...customer });
+      console.log('updated customer ', { customer_ID: id, ...customer });
+      result(null, { customer_ID: id, ...customer });
     }
   );
 };
