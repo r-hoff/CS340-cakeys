@@ -56,7 +56,7 @@ OrderReview.updateById = (id, orderReview, result) => {
       }
 
       console.log('updated OrderReview: ', { review_ID: id, ...orderReview });
-      result(null, { id: id, ...orderReview });
+      result(null, { review_ID: id, ...orderReview });
     }
   );
 };
