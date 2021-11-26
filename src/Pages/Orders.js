@@ -99,7 +99,7 @@ export default function Orders() {
             <div className='inputs'>
               <input type='number' id='customer_ID' name='customer_ID' onChange={onChange}></input>
               <input type='number' placeholder='0.00' step='0.01' min='0' id='order_total_USD' name='order_total_USD' onChange={onChange} required></input>
-              <input type='datetime-local' id='order_date_time' name='order_date_time' onChange={onChange}></input>
+              <input type='datetime-local' id='order_date_time' name='order_date_time' onChange={onChange} required></input>
               <input type='text' pattern='[0-9]*' minLength='16' maxLength='16' id='credit_card_number' name='credit_card_number' onChange={onChange} required></input>
               <input type='month' id='credit_card_expiration' name='credit_card_expiration' onChange={onChange} required></input>
               <input type='date' id='order_fill_date' name='order_fill_date' onChange={onChange} required></input>

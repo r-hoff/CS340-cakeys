@@ -89,7 +89,8 @@ export default function OrderedCakes() {
               <input type='number' min='1' id='cake_qty' name='cake_qty' onChange={onChange} required></input>
               <select id='order_status' name='order_status' onChange={onChange} required>
                 <option value=''></option>
-                <option value='Incomplete'>Incomplete</option>
+                <option value='Incomplete'>Placed</option>
+                <option value='Incomplete'>Filled</option>
                 <option value='Awaiting Pickup'>Awaiting Pickup</option>
                 <option value='Completed'>Completed</option>
               </select>

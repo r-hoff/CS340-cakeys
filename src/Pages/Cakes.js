@@ -60,7 +60,7 @@ export default function Cakes() {
   const onDelete = (index) => {
     const id = cakes[index].cake_ID;
     const deleteUrl = url + '/' + id;
-    const confirmDelete = window.confirm('Warning: Deleting this record will delete all related OrderedCakes. Are you sure you wish to continue?');
+    const confirmDelete = window.confirm('Warning: Deleting this record will delete any OrderedCakes of this type. Would you like to continue?');
     if (confirmDelete === true) {
       axios.delete(deleteUrl).then((res) => {
         setCakes(cakes.filter((cake) => cake.cake_ID !== id));
