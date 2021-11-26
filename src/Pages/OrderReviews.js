@@ -48,7 +48,6 @@ export default function OrderReviews() {
           return review.review_ID === id;
         })
       ] = res.data;
-      console.log(updateArr)
       setReviews(updateArr);
       setShowUpdate(false);
     });
@@ -60,7 +59,6 @@ export default function OrderReviews() {
   };
 
   const onDelete = (index) => {
-    console.log(index)
     const id = reviews[index].review_ID;
     const deleteUrl = url + '/' + id;
     const confirmDelete = window.confirm('Would you like to delete this record?');
