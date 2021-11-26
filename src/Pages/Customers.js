@@ -47,16 +47,17 @@ export default function Customers() {
     event.preventDefault();
     const id = updateCustomer.customer_ID;
     const updateUrl = url + '/' + id;
-    axios.put(updateUrl, updateCustomer)
-         .then(res => {
-              const updateArr = customers.slice();
-              updateArr[customers.findIndex((customer) => {
-                return customer.customer_ID === id;
-              })] = res.data;
-              setCustomers(updateArr);
-              setShowUpdate(false);
-            });
-  }
+    axios.put(updateUrl, updateCustomer).then((res) => {
+      const updateArr = customers.slice();
+      updateArr[
+        customers.findIndex((customer) => {
+          return customer.customer_ID === id;
+        })
+      ] = res.data;
+      setCustomers(updateArr);
+      setShowUpdate(false);
+    });
+  };
 
   const onSearch = (event) => {
     event.preventDefault();
@@ -67,20 +68,22 @@ export default function Customers() {
   };
 
   const onClick = (index) => {
-    const customer = customers[index]
-    customer.customer_DOB = customer.customer_DOB.slice(0, 10)
+    const customer = customers[index];
+    customer.customer_DOB = customer.customer_DOB.slice(0, 10);
     setUpdateCustomer(customer);
     setShowUpdate(true);
   };
 
   const onDelete = (index) => {
-    const id = customers[index].customer_ID
+    const id = customers[index].customer_ID;
     const deleteUrl = url + '/' + id;
-    axios.delete(deleteUrl)
-         .then(res => {
-            setCustomers(customers.filter(customer => customer.customer_ID !== id)); 
-          })
-  }
+    const confirmDelete = window.confirm('Would you like to delete this record?');
+    if (confirmDelete === true) {
+      axios.delete(deleteUrl).then((res) => {
+        setCustomers(customers.filter((customer) => customer.customer_ID !== id));
+      });
+    }
+  };
 
   return (
     <div className='Page'>
@@ -128,10 +131,10 @@ export default function Customers() {
                     <td>{customer.customer_phone}</td>
                     <td>{customer.customer_email}</td>
                     <td>
-                      <RiDeleteBinLine className='iconClick' color='red' onClick={() => onDelete(index)}/>
+                      <RiDeleteBinLine className='iconClick' color='red' onClick={() => onDelete(index)} />
                     </td>
                     <td>
-                      <RiEditLine className='iconClick' onClick={() => onClick(index)}/>
+                      <RiEditLine className='iconClick' onClick={() => onClick(index)} />
                     </td>
                   </tr>
                 );
@@ -140,7 +143,7 @@ export default function Customers() {
         </table>
       </div>
       <div>
-        {showUpdate &&
+        {showUpdate && (
           <div>
             <h3>Update Record</h3>
             <form onSubmit={onSubmitUpdate}>
@@ -228,7 +231,7 @@ export default function Customers() {
               <input type='submit' value='Submit'></input>
             </form>
           </div>
-        }
+        )}
       </div>
       <div className='container'>
         <h3>Add New Record</h3>
