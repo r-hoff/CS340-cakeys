@@ -98,10 +98,10 @@ export default function OrderReviews() {
                     <td>{review.service_rating}</td>
                     <td>{review.comment}</td>
                     <td>
-                      <RiDeleteBinLine className='iconClick' color='red' onClick={() => onDelete(index)} />
+                      <RiEditLine className='iconClick' onClick={() => onClick(index)} />
                     </td>
                     <td>
-                      <RiEditLine className='iconClick' onClick={() => onClick(index)} />
+                      <RiDeleteBinLine className='iconClick' color='red' onClick={() => onDelete(index)} />
                     </td>
                   </tr>
                 );

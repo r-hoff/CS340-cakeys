@@ -134,10 +134,10 @@ export default function Customers() {
                     <td>{customer.customer_phone}</td>
                     <td>{customer.customer_email}</td>
                     <td>
-                      <RiDeleteBinLine className='iconClick' color='red' onClick={() => onDelete(index)} />
+                      <RiEditLine className='iconClick' onClick={() => onClick(index)} />
                     </td>
                     <td>
-                      <RiEditLine className='iconClick' onClick={() => onClick(index)} />
+                      <RiDeleteBinLine className='iconClick' color='red' onClick={() => onDelete(index)} />
                     </td>
                   </tr>
                 );

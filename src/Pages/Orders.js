@@ -117,10 +117,10 @@ export default function Orders() {
                     <td>{order.order_pickup_date.slice(0, 10)}</td>
                     <td>{order.review_ID ? order.review_ID : 'None'}</td>
                     <td>
-                      <RiDeleteBinLine className='iconClick' color='red' onClick={() => onDelete(index)} />
+                      <RiEditLine className='iconClick' onClick={() => onClick(index)} />
                     </td>
                     <td>
-                      <RiEditLine className='iconClick' onClick={() => onClick(index)} />
+                      <RiDeleteBinLine className='iconClick' color='red' onClick={() => onDelete(index)} />
                     </td>
                   </tr>
                 );

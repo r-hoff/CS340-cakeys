@@ -92,10 +92,10 @@ export default function CustomerDiscount() {
                     <td>{discount.discount_name}</td>
                     <td>{discount.discount_rate * 100 + '%'}</td>
                     <td>
-                      <RiDeleteBinLine className='iconClick' color='red' onClick={() => onDelete(index)} />
+                      <RiEditLine className='iconClick' onClick={() => onClick(index)} />
                     </td>
                     <td>
-                      <RiEditLine className='iconClick' onClick={() => onClick(index)} />
+                      <RiDeleteBinLine className='iconClick' color='red' onClick={() => onDelete(index)} />
                     </td>
                   </tr>
                 );
