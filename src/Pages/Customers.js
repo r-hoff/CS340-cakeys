@@ -9,10 +9,10 @@ export default function Customers() {
   const [updateCustomer, setUpdateCustomer] = useState(null);
   const [customers, setCustomers] = useState(null);
   const [newCustomer, setNewCustomer] = useState({
-    discount_ID: null,
+    discount_ID: '',
     customer_first_name: '',
     customer_last_name: '',
-    customer_DOB: null,
+    customer_DOB: '',
     customer_street_address: '',
     customer_city: '',
     customer_state: '',
@@ -69,6 +69,9 @@ export default function Customers() {
 
   const onClick = (index) => {
     const customer = customers[index];
+    if (customer.discount_ID === null || customer.discount_ID === '0000-00-00') {
+      customer.discount_ID = '';
+    }
     customer.customer_DOB === null ? (customer.customer_DOB = '') : (customer.customer_DOB = customer.customer_DOB.slice(0, 10));
     setUpdateCustomer(customer);
     setShowUpdate(true);

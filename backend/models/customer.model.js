@@ -4,7 +4,7 @@ const sql = require('./db.js');
 const Customer = function (customer) {
   this.customer_first_name = customer.customer_first_name;
   this.customer_last_name = customer.customer_last_name;
-  this.customer_DOB = customer.customer_DOB === '0000-00-00' ? null : customer.customer_DOB;
+  this.customer_DOB = customer.customer_DOB === '0000-00-00' || customer.customer_DOB === '' ? null : customer.customer_DOB;
   this.customer_street_address = customer.customer_street_address;
   this.customer_city = customer.customer_city;
   this.customer_state = customer.customer_state;

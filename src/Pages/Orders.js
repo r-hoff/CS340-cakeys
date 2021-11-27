@@ -16,7 +16,7 @@ export default function Orders() {
     credit_card_expiration: '',
     order_fill_date: '',
     order_pickup_date: '',
-    review_ID: null,
+    review_ID: '',
   });
 
   useEffect(() => {
@@ -59,6 +59,9 @@ export default function Orders() {
 
   const onClick = (index) => {
     const order = orders[index];
+    if (order.review_ID === null) {
+      order.review_ID = '';
+    }
     order.order_date_time = order.order_date_time.slice(0, 16);
     order.order_fill_date = order.order_fill_date.slice(0, 10);
     order.order_pickup_date = order.order_pickup_date.slice(0, 10);
