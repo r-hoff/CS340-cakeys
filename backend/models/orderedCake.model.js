@@ -55,8 +55,8 @@ OrderedCake.updateById = (order_ID, cake_ID, orderedCake, result) => {
         result({ kind: 'not_found' }, null);
         return;
       }
-      console.log('updated OrderedCake ', { order_ID: order_ID, cake_ID: cake_ID });
-      result(null, { order_ID: order_ID, cake_ID: cake_ID });
+      console.log('updated OrderedCake ', { ...orderedCake });
+      result(null, { ...orderedCake });
     }
   );
 };

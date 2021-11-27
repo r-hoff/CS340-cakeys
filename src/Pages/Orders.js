@@ -46,13 +46,20 @@ export default function Orders() {
     const id = updateOrder.order_ID;
     const updateUrl = url + '/' + id;
     axios.put(updateUrl, updateOrder).then((res) => {
-      const updateArr = orders.slice();
-      updateArr[
-        orders.findIndex((order) => {
-          return order.order_ID === id;
-        })
-      ] = res.data;
-      setOrders(updateArr);
+      if (res.data.code) {
+        window.alert(res.data.sqlMessage + '. As a result, record was not updated.');
+        axios.get(url).then((res) => {
+          setOrders(res.data);
+        });
+      } else {
+        const updateArr = orders.slice();
+        updateArr[
+          orders.findIndex((order) => {
+            return order.order_ID === id;
+          })
+        ] = res.data;
+        setOrders(updateArr);
+      }
       setShowUpdate(false);
     });
   };

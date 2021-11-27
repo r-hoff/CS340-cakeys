@@ -48,13 +48,20 @@ export default function Customers() {
     const id = updateCustomer.customer_ID;
     const updateUrl = url + '/' + id;
     axios.put(updateUrl, updateCustomer).then((res) => {
-      const updateArr = customers.slice();
-      updateArr[
-        customers.findIndex((customer) => {
-          return customer.customer_ID === id;
-        })
-      ] = res.data;
-      setCustomers(updateArr);
+      if (res.data.code) {
+        window.alert(res.data.sqlMessage + '. As a result, record was not updated.');
+        axios.get(url).then((res) => {
+          setCustomers(res.data);
+        });
+      } else {
+        const updateArr = customers.slice();
+        updateArr[
+          customers.findIndex((customer) => {
+            return customer.customer_ID === id;
+          })
+        ] = res.data;
+        setCustomers(updateArr);
+      }
       setShowUpdate(false);
     });
   };

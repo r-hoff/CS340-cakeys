@@ -93,6 +93,6 @@ INSERT INTO `Orders` (`order_total_USD`, `order_date_time`, `credit_card_number`
 (104.98, '2021-09-21 22:00:11','4321876543218765','2023-05','2021-10-10','2021-10-12', 1, 1);
 
 INSERT INTO `OrderedCakes` (`order_ID`, `cake_ID`, `cake_sale_price_USD`, `cake_qty`, `order_status`) VALUES
-(1, 1, 45.99, 1, 'Incomplete'),
-(1, 3, 43.99, 1, 'Incomplete'),
-(2, 2, 52.99, 2, 'Completed');
+(1, 1, 45.99, 1, 'Completed'),
+(1, 3, 43.99, 1, 'Placed'),
+(2, 2, 52.99, 2, 'Awaiting Pickup');
