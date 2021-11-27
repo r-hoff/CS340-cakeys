@@ -9,7 +9,7 @@ export default function OrderReviews() {
   const [updateReview, setUpdateReview] = useState(null);
   const [reviews, setReviews] = useState(null);
   const [newReview, setNewReview] = useState({
-    overall_rating: '',
+    overall_rating: 0,
     product_quality_rating: 0,
     service_rating: 0,
     comment: '',

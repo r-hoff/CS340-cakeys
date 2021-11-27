@@ -69,7 +69,7 @@ export default function Customers() {
 
   const onClick = (index) => {
     const customer = customers[index];
-    customer.customer_DOB = customer.customer_DOB.slice(0, 10);
+    customer.customer_DOB === null ? (customer.customer_DOB = '') : (customer.customer_DOB = customer.customer_DOB.slice(0, 10));
     setUpdateCustomer(customer);
     setShowUpdate(true);
   };

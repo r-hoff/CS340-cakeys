@@ -9,7 +9,7 @@ const Order = function (order) {
   this.order_fill_date = order.order_fill_date;
   this.order_pickup_date = order.order_pickup_date;
   this.customer_ID = order.customer_ID;
-  this.review_ID = order.review_ID;
+  this.review_ID = order.review_ID === '' ? null : order.review_ID;
 };
 
 // create Order
@@ -47,17 +47,7 @@ Order.updateById = (id, order, result) => {
   sql.query(
     `UPDATE Orders SET order_total_USD = ?, order_date_time = ?, credit_card_number = ?, credit_card_expiration = ?, order_fill_date = ?, 
     order_pickup_date = ?, customer_ID = ?, review_ID = ? WHERE order_ID = ?`,
-    [
-      order.order_total_USD,
-      order.order_date_time,
-      order.credit_card_number,
-      order.credit_card_expiration,
-      order.order_fill_date,
-      order.order_pickup_date,
-      order.customer_ID,
-      order.review_ID,
-      id,
-    ],
+    [order.order_total_USD, order.order_date_time, order.credit_card_number, order.credit_card_expiration, order.order_fill_date, order.order_pickup_date, order.customer_ID, order.review_ID, id],
     (err, res) => {
       if (err) {
         console.log('error: ', err);

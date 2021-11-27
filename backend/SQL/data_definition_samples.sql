@@ -28,9 +28,9 @@ CREATE TABLE `Customers` (
 
 CREATE TABLE `OrderReviews` (
     `review_ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `overall_rating` int(11),
-    `product_quality_rating` int(11),
-    `service_rating` int(11),
+    `overall_rating` int(11) NOT NULL,
+    `product_quality_rating` int(11) NOT NULL,
+    `service_rating` int(11) NOT NULL,
     `comment` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
