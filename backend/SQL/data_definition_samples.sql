@@ -6,13 +6,13 @@ DROP TABLE IF EXISTS `Customers`;
 DROP TABLE IF EXISTS `CustomerDiscount`;
 
 CREATE TABLE `CustomerDiscount` (
-    `discount_ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `discount_name` varchar(255) NOT NULL UNIQUE,
+    `discount_ID` int(11) NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
+    `discount_name` varchar(255) NOT NULL,
     `discount_rate` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `Customers` (
-    `customer_ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `customer_ID` int(11) NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
     `customer_first_name` varchar(255) NOT NULL,
     `customer_last_name` varchar(255) NOT NULL,
     `customer_DOB` date,
@@ -27,7 +27,7 @@ CREATE TABLE `Customers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `OrderReviews` (
-    `review_ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `review_ID` int(11) NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
     `overall_rating` int(11) NOT NULL,
     `product_quality_rating` int(11) NOT NULL,
     `service_rating` int(11) NOT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE `OrderReviews` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `Orders` (
-    `order_ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `order_ID` int(11) NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
     `order_total_USD` float UNSIGNED NOT NULL,
     `order_date_time` datetime NOT NULL,
     `credit_card_number` varchar(255) NOT NULL,
@@ -43,13 +43,13 @@ CREATE TABLE `Orders` (
     `order_fill_date` date,
     `order_pickup_date` date,
     `customer_ID` int(11) NOT NULL,
-    `review_ID` int(11),
+    `review_ID` int(11) UNIQUE,
     FOREIGN KEY (`customer_ID`) REFERENCES `Customers` (`customer_ID`) ON DELETE CASCADE,
     FOREIGN KEY (`review_ID`) REFERENCES `OrderReviews` (`review_ID`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `Cakes` (
-    `cake_ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `cake_ID` int(11) NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
     `cake_name` varchar(255) NOT NULL,
     `cake_size` int UNSIGNED NOT NULL,
     `cake_retail_price_USD` float UNSIGNED NOT NULL
