@@ -19,6 +19,26 @@ export default function Orders() {
     review_ID: '',
   });
 
+  // get data from apis to populate drop downs
+  const [customerOptions, setCustomerOptions] = useState(null);
+  const [newCustomerOption, setNewCustomerOption] = useState({
+    customer_ID: '',
+  });
+  useEffect(() => {
+    axios.get('http://flip1.engr.oregonstate.edu:9001/api/customers').then((res) => {
+      setCustomerOptions(res.data);
+    });
+  }, []);
+  const [reviewOptions, setReviewOptions] = useState(null);
+  const [newReviewOption, setNewReviewOption] = useState({
+    review_ID: '',
+  });
+  useEffect(() => {
+    axios.get('http://flip1.engr.oregonstate.edu:9001/api/order-reviews').then((res) => {
+      setReviewOptions(res.data);
+    });
+  }, []);
+
   useEffect(() => {
     axios.get(url).then((res) => {
       setOrders(res.data);
@@ -27,6 +47,8 @@ export default function Orders() {
 
   const onChange = (event) => {
     setNewOrder({ ...newOrder, [event.target.name]: event.target.value });
+    setNewCustomerOption({ ...newCustomerOption, [event.target.name]: event.target.value });
+    setNewReviewOption({ ...newReviewOption, [event.target.name]: event.target.value });
   };
 
   const onChangeUpdate = (event) => {
@@ -154,14 +176,34 @@ export default function Orders() {
                 </div>
                 <div className='inputs'>
                   <input type='number' id='order_ID' name='order_ID' value={updateOrder.order_ID} readOnly></input>
-                  <input type='number' id='customer_ID' name='customer_ID' onChange={onChangeUpdate} value={updateOrder.customer_ID} required></input>
+                  <select id='customer_ID' name='customer_ID' onChange={onChangeUpdate} value={updateOrder.customer_ID} required>
+                    <option value=''></option>
+                    {customerOptions &&
+                      customerOptions.map((customer, index) => {
+                        return (
+                          <option key={index} value={customer.customer_ID}>
+                            {customer.customer_ID + ' - ' + customer.customer_first_name + ' ' + customer.customer_last_name}
+                          </option>
+                        );
+                      })}
+                  </select>
                   <input type='number' placeholder='0.00' step='0.01' min='0' id='order_total_USD' name='order_total_USD' onChange={onChangeUpdate} value={updateOrder.order_total_USD} required></input>
                   <input type='datetime-local' id='order_date_time' name='order_date_time' onChange={onChangeUpdate} value={updateOrder.order_date_time} required></input>
                   <input type='text' pattern='[0-9]*' minLength='16' maxLength='16' id='credit_card_number' name='credit_card_number' onChange={onChangeUpdate} value={updateOrder.credit_card_number} required></input>
                   <input type='month' id='credit_card_expiration' name='credit_card_expiration' onChange={onChangeUpdate} value={updateOrder.credit_card_expiration} required></input>
-                  <input type='date' id='order_fill_date' name='order_fill_date' onChange={onChangeUpdate} value={updateOrder.order_fill_date} required></input>
-                  <input type='date' id='order_pickup_date' name='order_pickup_date' onChange={onChangeUpdate} value={updateOrder.order_pickup_date} required></input>
-                  <input type='text' id='review_ID' name='review_ID' onChange={onChangeUpdate} value={updateOrder.review_ID}></input>
+                  <input type='date' id='order_fill_date' name='order_fill_date' onChange={onChangeUpdate} value={updateOrder.order_fill_date} ></input>
+                  <input type='date' id='order_pickup_date' name='order_pickup_date' onChange={onChangeUpdate} value={updateOrder.order_pickup_date} ></input>
+                  <select id='review_ID' name='review_ID' onChange={onChangeUpdate} value={updateOrder.review_ID}>
+                    <option value=''></option>
+                    {reviewOptions &&
+                      reviewOptions.map((review, index) => {
+                        return (
+                          <option key={index} value={review.review_ID}>
+                            {review.review_ID}
+                          </option>
+                        );
+                      })}
+                  </select>
                 </div>
               </div>
               <input type='submit' value='Submit'></input>
@@ -184,14 +226,34 @@ export default function Orders() {
               <label htmlFor='review_ID'>Review ID: </label>
             </div>
             <div className='inputs'>
-              <input type='number' id='customer_ID' name='customer_ID' onChange={onChange} required></input>
+              <select id='customer_ID' name='customer_ID' onChange={onChange} required>
+                <option value=''></option>
+                {customerOptions &&
+                  customerOptions.map((customer, index) => {
+                    return (
+                      <option key={index} value={customer.customer_ID}>
+                        {customer.customer_ID + ' - ' + customer.customer_first_name + ' ' + customer.customer_last_name}
+                      </option>
+                    );
+                  })}
+              </select>
               <input type='number' placeholder='0.00' step='0.01' min='0' id='order_total_USD' name='order_total_USD' onChange={onChange} required></input>
               <input type='datetime-local' id='order_date_time' name='order_date_time' onChange={onChange} required></input>
               <input type='text' pattern='[0-9]*' minLength='16' maxLength='16' id='credit_card_number' name='credit_card_number' onChange={onChange} required></input>
               <input type='month' id='credit_card_expiration' name='credit_card_expiration' onChange={onChange} required></input>
-              <input type='date' id='order_fill_date' name='order_fill_date' onChange={onChange} required></input>
-              <input type='date' id='order_pickup_date' name='order_pickup_date' onChange={onChange} required></input>
-              <input type='text' id='review_ID' name='review_ID' onChange={onChange}></input>
+              <input type='date' id='order_fill_date' name='order_fill_date' onChange={onChange} ></input>
+              <input type='date' id='order_pickup_date' name='order_pickup_date' onChange={onChange} ></input>
+              <select id='review_ID' name='review_ID' onChange={onChange}>
+                <option value=''></option>
+                {reviewOptions &&
+                  reviewOptions.map((review, index) => {
+                    return (
+                      <option key={index} value={review.review_ID}>
+                        {review.review_ID}
+                      </option>
+                    );
+                  })}
+              </select>
             </div>
           </div>
           <input type='submit' value='Submit'></input>

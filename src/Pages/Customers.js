@@ -4,6 +4,65 @@ import axios from 'axios';
 
 export default function Customers() {
   const url = 'http://flip1.engr.oregonstate.edu:9001/api/customers';
+  const states = [
+    'AK',
+    'AL',
+    'AR',
+    'AS',
+    'AZ',
+    'CA',
+    'CO',
+    'CT',
+    'DC',
+    'DE',
+    'FL',
+    'GA',
+    'GU',
+    'HI',
+    'IA',
+    'ID',
+    'IL',
+    'IN',
+    'KS',
+    'KY',
+    'LA',
+    'MA',
+    'MD',
+    'ME',
+    'MI',
+    'MN',
+    'MO',
+    'MP',
+    'MS',
+    'MT',
+    'NC',
+    'ND',
+    'NE',
+    'NH',
+    'NJ',
+    'NM',
+    'NV',
+    'NY',
+    'OH',
+    'OK',
+    'OR',
+    'PA',
+    'PR',
+    'RI',
+    'SC',
+    'SD',
+    'TN',
+    'TX',
+    'UM',
+    'UT',
+    'VA',
+    'VI',
+    'VT',
+    'WA',
+    'WI',
+    'WV',
+    'WY',
+  ];
 
   const [showUpdate, setShowUpdate] = useState(false);
   const [updateCustomer, setUpdateCustomer] = useState(null);
@@ -21,6 +80,19 @@ export default function Customers() {
     customer_email: '',
   });
 
+  // get data from api to populate drop down
+  const [discountOptions, setDiscountOptions] = useState(null);
+  const [newDiscountOption, setNewDiscountOption] = useState({
+    discount_ID: '',
+    discount_name: '',
+    discount_rate: '',
+  });
+  useEffect(() => {
+    axios.get('http://flip1.engr.oregonstate.edu:9001/api/customer-discount').then((res) => {
+      setDiscountOptions(res.data);
+    });
+  }, []);
+
   useEffect(() => {
     axios.get(url).then((res) => {
       setCustomers(res.data);
@@ -29,6 +101,7 @@ export default function Customers() {
 
   const onChange = (event) => {
     setNewCustomer({ ...newCustomer, [event.target.name]: event.target.value });
+    setNewDiscountOption({ ...newDiscountOption, [event.target.name]: event.target.value });
   };
 
   const onChangeUpdate = (event) => {
@@ -173,7 +246,17 @@ export default function Customers() {
                 </div>
                 <div className='inputs'>
                   <input type='text' id='customer_ID' name='customer_ID' value={updateCustomer.customer_ID} readOnly></input>
-                  <input type='number' min='1' id='discount_ID' name='discount_ID' onChange={onChangeUpdate} value={updateCustomer.discount_ID}></input>
+                  <select id='discount_ID' name='discount_ID' onChange={onChangeUpdate} value={updateCustomer.discount_ID}>
+                    <option value=''></option>
+                    {discountOptions &&
+                      discountOptions.map((discount, index) => {
+                        return (
+                          <option key={index} value={discount.discount_ID}>
+                            {discount.discount_ID + ' - ' + discount.discount_name + ' (' + discount.discount_rate * 100 + '%)'}
+                          </option>
+                        );
+                      })}
+                  </select>
                   <input type='text' id='customer_first_name' name='customer_first_name' onChange={onChangeUpdate} value={updateCustomer.customer_first_name} required></input>
                   <input type='text' id='customer_last_name' name='customer_last_name' onChange={onChangeUpdate} value={updateCustomer.customer_last_name} required></input>
                   <input type='date' id='customer_DOB' name='customer_DOB' onChange={onChangeUpdate} value={updateCustomer.customer_DOB}></input>
@@ -181,57 +264,9 @@ export default function Customers() {
                   <input type='text' id='customer_city' name='customer_city' onChange={onChangeUpdate} value={updateCustomer.customer_city} required></input>
                   <select id='customer_state' name='customer_state' onChange={onChangeUpdate} value={updateCustomer.customer_state} required>
                     <option value=''></option>
-                    <option value='AL'>AL</option>
-                    <option value='AK'>AK</option>
-                    <option value='AR'>AR</option>
-                    <option value='AZ'>AZ</option>
-                    <option value='CA'>CA</option>
-                    <option value='CO'>CO</option>
-                    <option value='CT'>CT</option>
-                    <option value='DC'>DC</option>
-                    <option value='DE'>DE</option>
-                    <option value='FL'>FL</option>
-                    <option value='GA'>GA</option>
-                    <option value='HI'>HI</option>
-                    <option value='IA'>IA</option>
-                    <option value='ID'>ID</option>
-                    <option value='IL'>IL</option>
-                    <option value='IN'>IN</option>
-                    <option value='KS'>KS</option>
-                    <option value='KY'>KY</option>
-                    <option value='LA'>LA</option>
-                    <option value='MA'>MA</option>
-                    <option value='MD'>MD</option>
-                    <option value='ME'>ME</option>
-                    <option value='MI'>MI</option>
-                    <option value='MN'>MN</option>
-                    <option value='MO'>MO</option>
-                    <option value='MS'>MS</option>
-                    <option value='MT'>MT</option>
-                    <option value='NC'>NC</option>
-                    <option value='NE'>NE</option>
-                    <option value='NH'>NH</option>
-                    <option value='NJ'>NJ</option>
-                    <option value='NM'>NM</option>
-                    <option value='NV'>NV</option>
-                    <option value='NY'>NY</option>
-                    <option value='ND'>ND</option>
-                    <option value='OH'>OH</option>
-                    <option value='OK'>OK</option>
-                    <option value='OR'>OR</option>
-                    <option value='PA'>PA</option>
-                    <option value='RI'>RI</option>
-                    <option value='SC'>SC</option>
-                    <option value='SD'>SD</option>
-                    <option value='TN'>TN</option>
-                    <option value='TX'>TX</option>
-                    <option value='UT'>UT</option>
-                    <option value='VT'>VT</option>
-                    <option value='VA'>VA</option>
-                    <option value='WA'>WA</option>
-                    <option value='WI'>WI</option>
-                    <option value='WV'>WV</option>
-                    <option value='WY'>WY</option>
+                    {states.map((state, index) => (
+                      <option key={index} value={state}>{state}</option>
+                    ))}
                   </select>
                   <input type='text' pattern='[0-9]*' minLength='5' maxLength='5' id='customer_zip' name='customer_zip' onChange={onChangeUpdate} value={updateCustomer.customer_zip} required></input>
                   <input type='tel' pattern='[0-9]{3}-[0-9]{3}-[0-9]{4}' id='customer_phone' name='customer_phone' onChange={onChangeUpdate} value={updateCustomer.customer_phone} required></input>
@@ -260,7 +295,17 @@ export default function Customers() {
               <label htmlFor='customer_email'>Email: </label>
             </div>
             <div className='inputs'>
-              <input type='number' min='1' id='discount_ID' name='discount_ID' onChange={onChange}></input>
+              <select id='discount_ID' name='discount_ID' onChange={onChange}>
+                <option value=''></option>
+                {discountOptions &&
+                  discountOptions.map((discount, index) => {
+                    return (
+                      <option key={index} value={discount.discount_ID}>
+                        {discount.discount_ID + ' - ' + discount.discount_name + ' (' + discount.discount_rate * 100 + '%)'}
+                      </option>
+                    );
+                  })}
+              </select>
               <input type='text' id='customer_first_name' name='customer_first_name' onChange={onChange} required></input>
               <input type='text' id='customer_last_name' name='customer_last_name' onChange={onChange} required></input>
               <input type='date' id='customer_DOB' name='customer_DOB' onChange={onChange}></input>
@@ -268,57 +313,9 @@ export default function Customers() {
               <input type='text' id='customer_city' name='customer_city' onChange={onChange} required></input>
               <select id='customer_state' name='customer_state' onChange={onChange} required>
                 <option value=''></option>
-                <option value='AL'>AL</option>
-                <option value='AK'>AK</option>
-                <option value='AR'>AR</option>
-                <option value='AZ'>AZ</option>
-                <option value='CA'>CA</option>
-                <option value='CO'>CO</option>
-                <option value='CT'>CT</option>
-                <option value='DC'>DC</option>
-                <option value='DE'>DE</option>
-                <option value='FL'>FL</option>
-                <option value='GA'>GA</option>
-                <option value='HI'>HI</option>
-                <option value='IA'>IA</option>
-                <option value='ID'>ID</option>
-                <option value='IL'>IL</option>
-                <option value='IN'>IN</option>
-                <option value='KS'>KS</option>
-                <option value='KY'>KY</option>
-                <option value='LA'>LA</option>
-                <option value='MA'>MA</option>
-                <option value='MD'>MD</option>
-                <option value='ME'>ME</option>
-                <option value='MI'>MI</option>
-                <option value='MN'>MN</option>
-                <option value='MO'>MO</option>
-                <option value='MS'>MS</option>
-                <option value='MT'>MT</option>
-                <option value='NC'>NC</option>
-                <option value='NE'>NE</option>
-                <option value='NH'>NH</option>
-                <option value='NJ'>NJ</option>
-                <option value='NM'>NM</option>
-                <option value='NV'>NV</option>
-                <option value='NY'>NY</option>
-                <option value='ND'>ND</option>
-                <option value='OH'>OH</option>
-                <option value='OK'>OK</option>
-                <option value='OR'>OR</option>
-                <option value='PA'>PA</option>
-                <option value='RI'>RI</option>
-                <option value='SC'>SC</option>
-                <option value='SD'>SD</option>
-                <option value='TN'>TN</option>
-                <option value='TX'>TX</option>
-                <option value='UT'>UT</option>
-                <option value='VT'>VT</option>
-                <option value='VA'>VA</option>
-                <option value='WA'>WA</option>
-                <option value='WI'>WI</option>
-                <option value='WV'>WV</option>
-                <option value='WY'>WY</option>
+                {states.map((state, index) => (
+                  <option key={index} value={state}>{state}</option>
+                ))}
               </select>
               <input type='text' pattern='[0-9]*' minLength='5' maxLength='5' id='customer_zip' name='customer_zip' onChange={onChange} required></input>
               <input type='tel' pattern='[0-9]{3}-[0-9]{3}-[0-9]{4}' id='customer_phone' name='customer_phone' onChange={onChange} required></input>

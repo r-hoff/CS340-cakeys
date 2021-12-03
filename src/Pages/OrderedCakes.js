@@ -16,6 +16,26 @@ export default function OrderedCakes() {
     order_status: '',
   });
 
+  // get data from apis to populate drop downs
+  const [orderOptions, setOrderOptions] = useState(null);
+  const [newOrderOption, setNewOrderOption] = useState({
+    order_ID: '',
+  });
+  useEffect(() => {
+    axios.get('http://flip1.engr.oregonstate.edu:9001/api/orders').then((res) => {
+      setOrderOptions(res.data);
+    });
+  }, []);
+  const [cakeOptions, setCakeOptions] = useState(null);
+  const [newCakeOption, setNewCakeOption] = useState({
+    cake_ID: '',
+  });
+  useEffect(() => {
+    axios.get('http://flip1.engr.oregonstate.edu:9001/api/cakes').then((res) => {
+      setCakeOptions(res.data);
+    });
+  }, []);
+
   useEffect(() => {
     axios.get(url).then((res) => {
       setOrders(res.data);
@@ -24,6 +44,8 @@ export default function OrderedCakes() {
 
   const onChange = (event) => {
     setNewOrder({ ...newOrder, [event.target.name]: event.target.value });
+    setNewOrderOption({ ...newOrderOption, [event.target.name]: event.target.value });
+    setNewCakeOption({ ...newCakeOption, [event.target.name]: event.target.value });
   };
 
   const onChangeUpdate = (event) => {
@@ -156,8 +178,28 @@ export default function OrderedCakes() {
               <label htmlFor='order_status'>Order Status: </label>
             </div>
             <div className='inputs'>
-              <input type='number' id='order_ID' name='order_ID' onChange={onChange} required></input>
-              <input type='number' id='cake_ID' name='cake_ID' onChange={onChange} required></input>
+              <select id='order_ID' name='order_ID' onChange={onChange} required>
+                <option value=''></option>
+                {orderOptions &&
+                  orderOptions.map((order, index) => {
+                    return (
+                      <option key={index} value={order.order_ID}>
+                        {order.order_ID}
+                      </option>
+                    );
+                  })}
+              </select>
+              <select id='cake_ID' name='cake_ID' onChange={onChange} required>
+                <option value=''></option>
+                {cakeOptions &&
+                  cakeOptions.map((cake, index) => {
+                    return (
+                      <option key={index} value={cake.cake_ID}>
+                        {cake.cake_ID}
+                      </option>
+                    );
+                  })}
+              </select>
               <input type='number' placeholder='0.00' step='0.01' min='0' id='cake_sale_price_USD' name='cake_sale_price_USD' onChange={onChange} required></input>
               <input type='number' min='1' id='cake_qty' name='cake_qty' onChange={onChange} required></input>
               <select id='order_status' name='order_status' onChange={onChange} required>
