@@ -43,7 +43,7 @@ CREATE TABLE `Orders` (
     `order_fill_date` date,
     `order_pickup_date` date,
     `customer_ID` int(11) NOT NULL,
-    `review_ID` int(11) UNIQUE,
+    `review_ID` int(11),
     FOREIGN KEY (`customer_ID`) REFERENCES `Customers` (`customer_ID`) ON DELETE CASCADE,
     FOREIGN KEY (`review_ID`) REFERENCES `OrderReviews` (`review_ID`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
