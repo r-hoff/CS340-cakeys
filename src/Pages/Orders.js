@@ -92,8 +92,9 @@ export default function Orders() {
       order.review_ID = '';
     }
     order.order_date_time = order.order_date_time.slice(0, 16);
-    order.order_fill_date = order.order_fill_date.slice(0, 10);
-    order.order_pickup_date = order.order_pickup_date.slice(0, 10);
+    order.order_fill_date === null ? (order.order_fill_date = '') : (order.order_fill_date = order.order_fill_date.slice(0, 10));
+    order.order_pickup_date === null ? (order.order_pickup_date = '') : (order.order_pickup_date = order.order_pickup_date.slice(0, 10));
+
     setUpdateOrder(orders[index]);
     setShowUpdate(true);
   };
@@ -191,8 +192,8 @@ export default function Orders() {
                   <input type='datetime-local' id='order_date_time' name='order_date_time' onChange={onChangeUpdate} value={updateOrder.order_date_time} required></input>
                   <input type='text' pattern='[0-9]*' minLength='16' maxLength='16' id='credit_card_number' name='credit_card_number' onChange={onChangeUpdate} value={updateOrder.credit_card_number} required></input>
                   <input type='month' id='credit_card_expiration' name='credit_card_expiration' onChange={onChangeUpdate} value={updateOrder.credit_card_expiration} required></input>
-                  <input type='date' id='order_fill_date' name='order_fill_date' onChange={onChangeUpdate} value={updateOrder.order_fill_date} ></input>
-                  <input type='date' id='order_pickup_date' name='order_pickup_date' onChange={onChangeUpdate} value={updateOrder.order_pickup_date} ></input>
+                  <input type='date' id='order_fill_date' name='order_fill_date' onChange={onChangeUpdate} value={updateOrder.order_fill_date}></input>
+                  <input type='date' id='order_pickup_date' name='order_pickup_date' onChange={onChangeUpdate} value={updateOrder.order_pickup_date}></input>
                   <select id='review_ID' name='review_ID' onChange={onChangeUpdate} value={updateOrder.review_ID}>
                     <option value=''></option>
                     {reviewOptions &&
@@ -241,8 +242,8 @@ export default function Orders() {
               <input type='datetime-local' id='order_date_time' name='order_date_time' onChange={onChange} required></input>
               <input type='text' pattern='[0-9]*' minLength='16' maxLength='16' id='credit_card_number' name='credit_card_number' onChange={onChange} required></input>
               <input type='month' id='credit_card_expiration' name='credit_card_expiration' onChange={onChange} required></input>
-              <input type='date' id='order_fill_date' name='order_fill_date' onChange={onChange} ></input>
-              <input type='date' id='order_pickup_date' name='order_pickup_date' onChange={onChange} ></input>
+              <input type='date' id='order_fill_date' name='order_fill_date' onChange={onChange}></input>
+              <input type='date' id='order_pickup_date' name='order_pickup_date' onChange={onChange}></input>
               <select id='review_ID' name='review_ID' onChange={onChange}>
                 <option value=''></option>
                 {reviewOptions &&

@@ -149,7 +149,7 @@ export default function Customers() {
 
   const onClick = (index) => {
     const customer = customers[index];
-    if (customer.discount_ID === null || customer.discount_ID === '0000-00-00') {
+    if (customer.discount_ID === null) {
       customer.discount_ID = '';
     }
     customer.customer_DOB === null ? (customer.customer_DOB = '') : (customer.customer_DOB = customer.customer_DOB.slice(0, 10));
@@ -265,7 +265,9 @@ export default function Customers() {
                   <select id='customer_state' name='customer_state' onChange={onChangeUpdate} value={updateCustomer.customer_state} required>
                     <option value=''></option>
                     {states.map((state, index) => (
-                      <option key={index} value={state}>{state}</option>
+                      <option key={index} value={state}>
+                        {state}
+                      </option>
                     ))}
                   </select>
                   <input type='text' pattern='[0-9]*' minLength='5' maxLength='5' id='customer_zip' name='customer_zip' onChange={onChangeUpdate} value={updateCustomer.customer_zip} required></input>
@@ -314,7 +316,9 @@ export default function Customers() {
               <select id='customer_state' name='customer_state' onChange={onChange} required>
                 <option value=''></option>
                 {states.map((state, index) => (
-                  <option key={index} value={state}>{state}</option>
+                  <option key={index} value={state}>
+                    {state}
+                  </option>
                 ))}
               </select>
               <input type='text' pattern='[0-9]*' minLength='5' maxLength='5' id='customer_zip' name='customer_zip' onChange={onChange} required></input>
