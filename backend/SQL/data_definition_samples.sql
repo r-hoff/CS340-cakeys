@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS `CustomerDiscount`;
 
 CREATE TABLE `CustomerDiscount` (
     `discount_ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `discount_name` varchar(255) NOT NULL,
+    `discount_name` varchar(255) NOT NULL UNIQUE,
     `discount_rate` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -21,7 +21,7 @@ CREATE TABLE `Customers` (
     `customer_state` varchar(255) NOT NULL,
     `customer_zip` varchar(255) NOT NULL,
     `customer_phone` varchar(255) NOT NULL,
-    `customer_email` varchar(255) NOT NULL,
+    `customer_email` varchar(255) NOT NULL UNIQUE,
     `discount_ID` int(11),
     FOREIGN KEY (`discount_ID`) REFERENCES `CustomerDiscount` (`discount_ID`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
