@@ -6,8 +6,8 @@ const Order = function (order) {
   this.order_date_time = order.order_date_time;
   this.credit_card_number = order.credit_card_number;
   this.credit_card_expiration = order.credit_card_expiration;
-  this.order_fill_date = order.order_fill_date;
-  this.order_pickup_date = order.order_pickup_date;
+  this.order_fill_date = order.order_fill_date === '0000-00-00' || order.order_fill_date === '' ? null : order.order_fill_date;
+  this.order_pickup_date = order.order_pickup_date === '0000-00-00' || order.order_pickup_date === '' ? null : order.order_pickup_date;
   this.customer_ID = order.customer_ID;
   this.review_ID = order.review_ID === '' ? null : order.review_ID;
 };
