@@ -23,13 +23,8 @@ OrderReview.create = (newOrderReview, result) => {
 };
 
 // get all orderReviews function
-OrderReview.getAll = (filter, result) => {
-  let query = 'SELECT OrderReviews.review_ID, OrderReviews.overall_rating, OrderReviews.product_quality_rating, OrderReviews.service_rating, OrderReviews.comment FROM OrderReviews';
-
-  // apply unassigned filter if present
-  if (filter === 'filter') {
-    query += ` LEFT JOIN Orders ON OrderReviews.review_ID = Orders.review_ID WHERE Orders.review_ID IS NULL`;
-  }
+OrderReview.getAll = (result) => {
+  let query = 'SELECT * FROM OrderReviews';
 
   sql.query(query, (err, res) => {
     if (err) {
