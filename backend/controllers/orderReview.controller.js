@@ -28,7 +28,7 @@ exports.create = (req, res) => {
 
 // Retrieve all OrderReviews from the database
 exports.findAll = (req, res) => {
-  OrderReview.getAll((err, data) => {
+  OrderReview.getAll(req.params.filter, (err, data) => {
     if (err)
       res.status(500).send({
         message: err.message,

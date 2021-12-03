@@ -9,6 +9,9 @@ module.exports = (app) => {
   // Retrieve all orderReviews
   router.get('/', orderReviews.findAll);
 
+  // Retrieve all unassigned orderReviews
+  router.get('/:filter', orderReviews.findAll);
+
   // update an orderReview by id
   router.put('/:id', orderReviews.update);
 

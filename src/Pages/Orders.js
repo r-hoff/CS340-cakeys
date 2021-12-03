@@ -34,7 +34,7 @@ export default function Orders() {
     review_ID: '',
   });
   useEffect(() => {
-    axios.get('http://flip1.engr.oregonstate.edu:9001/api/order-reviews').then((res) => {
+    axios.get('http://flip1.engr.oregonstate.edu:9001/api/order-reviews/filter').then((res) => {
       setReviewOptions(res.data);
     });
   }, []);
