@@ -143,8 +143,8 @@ export default function Orders() {
                     <td>{order.order_date_time.slice(0, 10) + ' ' + order.order_date_time.slice(11, 16)}</td>
                     <td>{order.credit_card_number.slice(0, 4) + ' ' + order.credit_card_number.slice(4, 8) + ' ' + order.credit_card_number.slice(8, 12) + ' ' + order.credit_card_number.slice(12, 16)}</td>
                     <td>{order.credit_card_expiration}</td>
-                    <td>{order.order_fill_date.slice(0, 10)}</td>
-                    <td>{order.order_pickup_date.slice(0, 10)}</td>
+                    <td>{order.order_fill_date ? order.order_fill_date.slice(0, 10) : 'N/A'}</td>
+                    <td>{order.order_pickup_date ? order.order_pickup_date.slice(0, 10) : 'N/A'}</td>
                     <td>{order.review_ID ? order.review_ID : 'None'}</td>
                     <td>
                       <RiEditLine className='iconClick' onClick={() => onClick(index)} />
