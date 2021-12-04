@@ -19,7 +19,7 @@ Customer.create = (newCustomer, result) => {
   sql.query('INSERT INTO Customers SET ?', newCustomer, (err, res) => {
     if (err) {
       console.log('error: ', err);
-      result(err, null);
+      result(null, err);
       return;
     }
 

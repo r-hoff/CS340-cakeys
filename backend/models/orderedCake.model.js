@@ -14,7 +14,7 @@ OrderedCake.create = (newOrderedCake, result) => {
   sql.query('INSERT INTO OrderedCakes SET ?', newOrderedCake, (err, res) => {
     if (err) {
       console.log('error: ', err);
-      result(err, null);
+      result(null, err);
       return;
     }
 
