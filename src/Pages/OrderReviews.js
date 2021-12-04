@@ -32,8 +32,15 @@ export default function OrderReviews() {
   const onSubmit = (event) => {
     event.preventDefault();
     axios.post(url, newReview).then((res) => {
-      setReviews([...reviews, res.data]);
-      event.target.reset();
+      if (res.data.code) {
+        window.alert(res.data.sqlMessage + '. As a result, record was not updated.');
+        axios.get(url).then((res) => {
+          setReviews(res.data);
+        });
+      } else {
+        setReviews([...reviews, res.data]);
+        event.target.reset();
+      }
     });
   };
 
@@ -42,13 +49,20 @@ export default function OrderReviews() {
     const id = updateReview.review_ID;
     const updateUrl = url + '/' + id;
     axios.put(updateUrl, updateReview).then((res) => {
-      const updateArr = reviews.slice();
-      updateArr[
-        reviews.findIndex((review) => {
-          return review.review_ID === id;
-        })
-      ] = res.data;
-      setReviews(updateArr);
+      if (res.data.code) {
+        window.alert(res.data.sqlMessage + '. As a result, record was not updated.');
+        axios.get(url).then((res) => {
+          setReviews(res.data);
+        });
+      } else {
+        const updateArr = reviews.slice();
+        updateArr[
+          reviews.findIndex((review) => {
+            return review.review_ID === id;
+          })
+        ] = res.data;
+        setReviews(updateArr);
+      }
       setShowUpdate(false);
     });
   };

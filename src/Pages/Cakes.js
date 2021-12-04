@@ -31,8 +31,15 @@ export default function Cakes() {
   const onSubmit = (event) => {
     event.preventDefault();
     axios.post(url, newCake).then((res) => {
-      setCakes([...cakes, res.data]);
-      event.target.reset();
+      if (res.data.code) {
+        window.alert(res.data.sqlMessage + '. As a result, record was not updated.');
+        axios.get(url).then((res) => {
+          setCakes(res.data);
+        });
+      } else {
+        setCakes([...cakes, res.data]);
+        event.target.reset();
+      }
     });
   };
 
@@ -41,13 +48,20 @@ export default function Cakes() {
     const id = updateCake.cake_ID;
     const updateUrl = url + '/' + id;
     axios.put(updateUrl, updateCake).then((res) => {
-      const updateArr = cakes.slice();
-      updateArr[
-        cakes.findIndex((cake) => {
-          return cake.cake_ID === id;
-        })
-      ] = res.data;
-      setCakes(updateArr);
+      if (res.data.code) {
+        window.alert(res.data.sqlMessage + '. As a result, record was not updated.');
+        axios.get(url).then((res) => {
+          setCakes(res.data);
+        });
+      } else {
+        const updateArr = cakes.slice();
+        updateArr[
+          cakes.findIndex((cake) => {
+            return cake.cake_ID === id;
+          })
+        ] = res.data;
+        setCakes(updateArr);
+      }
       setShowUpdate(false);
     });
   };

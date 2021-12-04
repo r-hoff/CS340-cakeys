@@ -3,7 +3,7 @@ import { RiDeleteBinLine, RiEditLine } from 'react-icons/ri';
 import axios from 'axios';
 
 export default function Orders() {
-  const url = 'http://flip1.engr.oregonstate.edu:9001/api/orders';
+  const url = 'http://localhost:9001/api/orders';
 
   const [showUpdate, setShowUpdate] = useState(false);
   const [updateOrder, setUpdateOrder] = useState(null);
@@ -25,7 +25,7 @@ export default function Orders() {
     customer_ID: '',
   });
   useEffect(() => {
-    axios.get('http://flip1.engr.oregonstate.edu:9001/api/customers').then((res) => {
+    axios.get('http://localhost:9001/api/customers').then((res) => {
       setCustomerOptions(res.data);
     });
   }, []);
@@ -58,8 +58,15 @@ export default function Orders() {
   const onSubmit = (event) => {
     event.preventDefault();
     axios.post(url, newOrder).then((res) => {
-      setOrders([...orders, res.data]);
-      event.target.reset();
+      if (res.data.code) {
+        window.alert(res.data.sqlMessage + '. As a result, record was not updated.');
+        axios.get(url).then((res) => {
+          setOrders(res.data);
+        });
+      } else {
+        setOrders([...orders, res.data]);
+        event.target.reset();
+      }
     });
   };
 

@@ -55,8 +55,15 @@ export default function OrderedCakes() {
   const onSubmit = (event) => {
     event.preventDefault();
     axios.post(url, newOrder).then((res) => {
-      setOrders([...orders, res.data]);
-      event.target.reset();
+      if (res.data.code) {
+        window.alert(res.data.sqlMessage + '. As a result, record was not created.');
+        axios.get(url).then((res) => {
+          setOrders(res.data);
+        });
+      } else {
+        setOrders([...orders, res.data]);
+        event.target.reset();
+      }
     });
   };
 
@@ -66,13 +73,20 @@ export default function OrderedCakes() {
     const cakeID = updateOrder.cake_ID;
     const updateUrl = url + '/' + orderID + '&' + cakeID;
     axios.put(updateUrl, updateOrder).then((res) => {
-      const updateArr = orders.slice();
-      updateArr[
-        orders.findIndex((order) => {
-          return order.order_ID === orderID && order.cake_ID === cakeID;
-        })
-      ] = res.data;
-      setOrders(updateArr);
+      if (res.data.code) {
+        window.alert(res.data.sqlMessage + '. As a result, record was not updated.');
+        axios.get(url).then((res) => {
+          setOrders(res.data);
+        });
+      } else {
+        const updateArr = orders.slice();
+        updateArr[
+          orders.findIndex((order) => {
+            return order.order_ID === orderID && order.cake_ID === cakeID;
+          })
+        ] = res.data;
+        setOrders(updateArr);
+      }
       setShowUpdate(false);
     });
   };

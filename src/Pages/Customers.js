@@ -111,8 +111,15 @@ export default function Customers() {
   const onSubmit = (event) => {
     event.preventDefault();
     axios.post(url, newCustomer).then((res) => {
-      setCustomers([...customers, res.data]);
-      event.target.reset();
+      if (res.data.code) {
+        window.alert(res.data.sqlMessage + '. As a result, record was not updated.');
+        axios.get(url).then((res) => {
+          setCustomers(res.data);
+        });
+      } else {
+        setCustomers([...customers, res.data]);
+        event.target.reset();
+      }
     });
   };
 

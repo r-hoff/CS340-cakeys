@@ -30,8 +30,15 @@ export default function CustomerDiscount() {
   const onSubmit = (event) => {
     event.preventDefault();
     axios.post(url, newDiscount).then((res) => {
-      setDiscounts([...discounts, res.data]);
-      event.target.reset();
+      if (res.data.code) {
+        window.alert(res.data.sqlMessage + '. As a result, record was not updated.');
+        axios.get(url).then((res) => {
+          setDiscounts(res.data);
+        });
+      } else {
+        setDiscounts([...discounts, res.data]);
+        event.target.reset();
+      }
     });
   };
 
@@ -40,13 +47,20 @@ export default function CustomerDiscount() {
     const id = updateDiscount.discount_ID;
     const updateUrl = url + '/' + id;
     axios.put(updateUrl, updateDiscount).then((res) => {
-      const updateArr = discounts.slice();
-      updateArr[
-        discounts.findIndex((discount) => {
-          return discount.discount_ID === id;
-        })
-      ] = res.data;
-      setDiscounts(updateArr);
+      if (res.data.code) {
+        window.alert(res.data.sqlMessage + '. As a result, record was not updated.');
+        axios.get(url).then((res) => {
+          setDiscounts(res.data);
+        });
+      } else {
+        const updateArr = discounts.slice();
+        updateArr[
+          discounts.findIndex((discount) => {
+            return discount.discount_ID === id;
+          })
+        ] = res.data;
+        setDiscounts(updateArr);
+      }
       setShowUpdate(false);
     });
   };
