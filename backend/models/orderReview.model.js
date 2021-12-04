@@ -13,7 +13,7 @@ OrderReview.create = (newOrderReview, result) => {
   sql.query('INSERT INTO OrderReviews SET ?', newOrderReview, (err, res) => {
     if (err) {
       console.log('error: ', err);
-      result(err, null);
+      result(null, err);
       return;
     }
 

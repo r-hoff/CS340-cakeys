@@ -11,7 +11,7 @@ CustomerDiscount.create = (newCustomerDiscount, result) => {
   sql.query('INSERT INTO CustomerDiscount SET ?', newCustomerDiscount, (err, res) => {
     if (err) {
       console.log('error: ', err);
-      result(err, null);
+      result(null, err);
       return;
     }
 
@@ -38,25 +38,21 @@ CustomerDiscount.getAll = (result) => {
 
 // update a single customerDiscount by ID
 CustomerDiscount.updateById = (id, customerDiscount, result) => {
-  sql.query(
-    'UPDATE CustomerDiscount SET discount_name = ?, discount_rate = ? WHERE discount_ID = ?',
-    [customerDiscount.discount_name, customerDiscount.discount_rate, id],
-    (err, res) => {
-      if (err) {
-        console.log('error: ', err);
-        result(null, err);
-        return;
-      }
-
-      if (res.affectedRows == 0) {
-        result({ kind: 'not_found' }, null);
-        return;
-      }
-
-      console.log('updated CustomerDiscount: ', { discount_ID: id, ...customerDiscount });
-      result(null, { discount_ID: id, ...customerDiscount });
+  sql.query('UPDATE CustomerDiscount SET discount_name = ?, discount_rate = ? WHERE discount_ID = ?', [customerDiscount.discount_name, customerDiscount.discount_rate, id], (err, res) => {
+    if (err) {
+      console.log('error: ', err);
+      result(null, err);
+      return;
     }
-  );
+
+    if (res.affectedRows == 0) {
+      result({ kind: 'not_found' }, null);
+      return;
+    }
+
+    console.log('updated CustomerDiscount: ', { discount_ID: id, ...customerDiscount });
+    result(null, { discount_ID: id, ...customerDiscount });
+  });
 };
 
 // remove a single customerDiscount by id

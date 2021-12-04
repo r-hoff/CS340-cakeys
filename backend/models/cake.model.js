@@ -12,7 +12,7 @@ Cake.create = (newCake, result) => {
   sql.query('INSERT INTO Cakes SET ?', newCake, (err, res) => {
     if (err) {
       console.log('error: ', err);
-      result(err, null);
+      result(null, err);
       return;
     }
 
@@ -39,25 +39,21 @@ Cake.getAll = (result) => {
 
 // update a single cake by ID
 Cake.updateById = (id, cake, result) => {
-  sql.query(
-    'UPDATE Cakes SET cake_name = ?, cake_size = ?, cake_retail_price_USD = ? WHERE cake_ID = ?',
-    [cake.cake_name, cake.cake_size, cake.cake_retail_price_USD, id],
-    (err, res) => {
-      if (err) {
-        console.log('error: ', err);
-        result(null, err);
-        return;
-      }
-
-      if (res.affectedRows == 0) {
-        result({ kind: 'not_found' }, null);
-        return;
-      }
-
-      console.log('updated cake ', { cake_ID: id, ...cake });
-      result(null, { cake_ID: id, ...cake });
+  sql.query('UPDATE Cakes SET cake_name = ?, cake_size = ?, cake_retail_price_USD = ? WHERE cake_ID = ?', [cake.cake_name, cake.cake_size, cake.cake_retail_price_USD, id], (err, res) => {
+    if (err) {
+      console.log('error: ', err);
+      result(null, err);
+      return;
     }
-  );
+
+    if (res.affectedRows == 0) {
+      result({ kind: 'not_found' }, null);
+      return;
+    }
+
+    console.log('updated cake ', { cake_ID: id, ...cake });
+    result(null, { cake_ID: id, ...cake });
+  });
 };
 
 // remove a single cake by id

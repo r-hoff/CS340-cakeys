@@ -17,7 +17,7 @@ Order.create = (newOrder, result) => {
   sql.query('INSERT INTO Orders SET ?', newOrder, (err, res) => {
     if (err) {
       console.log('error: ', err);
-      result(err, null);
+      result(null, err);
       return;
     }
 
