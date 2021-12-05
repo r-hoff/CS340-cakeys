@@ -113,4 +113,3 @@ WHERE review_ID = :review_ID_input;
 
 DELETE FROM OrderedCakes
 WHERE order_ID = :order_ID_input AND cake_ID = :cake_ID_input;
-
