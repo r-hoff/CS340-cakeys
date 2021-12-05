@@ -102,5 +102,5 @@ INSERT INTO `Orders` (`order_total_USD`, `order_date_time`, `credit_card_number`
 
 INSERT INTO `OrderedCakes` (`order_ID`, `cake_ID`, `cake_sale_price_USD`, `cake_qty`, `order_status`) VALUES
 (1, 1, 45.99, 2, 'Completed'),
-(2, 2, 45.04, 1, 'Placed'),
-(3, 3, 32.99, 2, 'Awaiting Pickup');
+(2, 2, 45.04, 1, 'Awaiting Pickup'),
+(3, 3, 32.99, 2, 'Placed');
