@@ -5,6 +5,9 @@ DROP TABLE IF EXISTS `OrderReviews`;
 DROP TABLE IF EXISTS `Customers`;
 DROP TABLE IF EXISTS `CustomerDiscount`;
 
+#############################
+# SET UP TABLES IN DATABASE #
+#############################
 CREATE TABLE `CustomerDiscount` (
     `discount_ID` int(11) NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
     `discount_name` varchar(255) NOT NULL,
@@ -66,6 +69,10 @@ CREATE TABLE `OrderedCakes` (
     FOREIGN KEY (`cake_ID`) REFERENCES `Cakes` (`cake_ID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+#############################
+# POPULATE TABLES WITH DATA #
+#############################
 INSERT INTO `CustomerDiscount`(`discount_name`, `discount_rate`) VALUES
 ('Corporate Partnership', 0.15),
 ('Fall 2021 Sale', 0.05),
@@ -89,10 +96,11 @@ INSERT INTO `OrderReviews` (`overall_rating`, `product_quality_rating`, `service
 (5, 5, 5, 'The cake tasted delicious!');
 
 INSERT INTO `Orders` (`order_total_USD`, `order_date_time`, `credit_card_number`, `credit_card_expiration`, `order_fill_date`, `order_pickup_date`, `customer_ID`, `review_ID`) VALUES
-(88.21, '2021-10-23 14:30:27','1234567812345678','2024-11','2021-10-27','2021-10-28', 2, NULL),
-(104.98, '2021-09-21 22:00:11','4321876543218765','2023-05','2021-10-10','2021-10-12', 1, 1);
+(88.21, '2021-10-23 14:30:27','1234567812345678','2024-11','2021-10-24','2021-10-26', 2, 1),
+(90.08, '2021-10-21 22:00:11','4321876543218765','2023-05','2021-10-11', NULL, , 2),
+(32.99, '2021-11-10 12:30:14','1111222233334444','2022-07',NULL ,NULL , 3, NULL);
 
 INSERT INTO `OrderedCakes` (`order_ID`, `cake_ID`, `cake_sale_price_USD`, `cake_qty`, `order_status`) VALUES
-(1, 1, 45.99, 1, 'Completed'),
-(1, 3, 43.99, 1, 'Placed'),
-(2, 2, 52.99, 2, 'Awaiting Pickup');
+(1, 1, 45.99, 2, 'Completed'),
+(2, 2, 45.04, 1, 'Placed'),
+(3, 3, 32.99, 2, 'Awaiting Pickup');
